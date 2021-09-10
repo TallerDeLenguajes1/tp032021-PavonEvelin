@@ -29,18 +29,20 @@ namespace WebApp_Cadeteria.Controllers
             return View();
         }
 
-        public void altaCadetes(string nombreCadeteria, int id, string nombre, string direccion, string telefono)
+        public string altaCadetes(string nombreCadeteria, int id, string nombre, string direccion, string telefono)
         {
             try
             {
                 Cadeteria cadeteria = new Cadeteria(nombreCadeteria);
                 cadeteria.agregarCadete(id, nombre, direccion, telefono);
-                Console.WriteLine("Agregado exitoso!\n\n");
+                //Console.WriteLine("Agregado exitoso!\n\n");
                 cadeteria.mostrarCadetes();
+                return "Agregado exitoso!\n";
             }
             catch (Exception)
             {
-                Console.WriteLine("Ingreso de datos invalido\n");
+                //Console.WriteLine("Ingreso de datos invalido\n");
+                return "Ingreso de datos invalido\n";
             }
             
         }

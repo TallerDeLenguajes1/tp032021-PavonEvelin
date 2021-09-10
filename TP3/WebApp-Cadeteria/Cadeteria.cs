@@ -13,9 +13,11 @@ namespace WebApp_Cadeteria
         public string Nombre { get => nombre; set => nombre = value; }
         internal List<Cadete> ListadoDeCadetes { get => listadoDeCadetes; set => listadoDeCadetes = value; }
 
-        public Cadeteria(string nombre)
+        public Cadeteria(string nombreCadeteria, int id, string nombre, string direccion, string telefono)
         {
-            this.nombre = nombre;
+            this.nombre = nombreCadeteria;
+            Cadete c = new Cadete(id, nombre, direccion, telefono);
+            listadoDeCadetes.Add(c);
         }
 
         public void agregarCadete(int id, string nombre, string direccion, string telefono)
