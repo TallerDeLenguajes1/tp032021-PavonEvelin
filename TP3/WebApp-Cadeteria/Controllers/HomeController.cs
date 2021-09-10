@@ -33,7 +33,7 @@ namespace WebApp_Cadeteria.Controllers
         {
             try
             {
-                Cadeteria cadeteria = new Cadeteria(nombreCadeteria);
+                Cadeteria cadeteria = new Cadeteria(nombreCadeteria, id, nombre, direccion, telefono);
                 cadeteria.agregarCadete(id, nombre, direccion, telefono);
                 //Console.WriteLine("Agregado exitoso!\n\n");
                 cadeteria.mostrarCadetes();

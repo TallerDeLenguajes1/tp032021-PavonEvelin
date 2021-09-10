@@ -20,11 +20,6 @@ namespace WebApp_Cadeteria
             listadoDeCadetes.Add(c);
         }
 
-        public void agregarCadete(int id, string nombre, string direccion, string telefono)
-        {
-            Cadete c = new Cadete(id, nombre, direccion, telefono);
-            listadoDeCadetes.Add(c);
-        }
 
         public void mostrarCadetes()
         {
