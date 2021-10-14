@@ -1,0 +1,35 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+ 
+@model List<Cadete>
+
+<div class="text-center">
+    <h2 class="display-4">Alta de Pedidos</h2>
+    <form asp-action="altaPedidos" asp-controller="Pedido" method="post">
+        <label>Observacion: <input type="text" name="obs" value="" id="obs" /></label>
+        <label for="estado">Estado: </label>
+        <select id="estado" name="estado">
+            <option value="1">EnCamino</option>
+            <option value="2">Entregado</option>
+            <option value="2">NoEntregado</option>
+        </select>
+        <label>Nombre Cliente: <input type="text" name="direccion" value="" id="direccion" /></label>
+        <label>Direccion Cliente: <input type="text" name="direccion" value="" id="direccion" /></label>
+        <label>Telefono Cliente: <input type="text" name="telefono" value="" id="telefono" /></label>
+        <label for="cadete">Cadete: </label>
+        <select id="cadete" name="cadete">
+            @foreach (var item in Model)
+            {
+                <option value="@item.Id">@item.Nombre</option>
+            }
+        </select>
+        <input id="Submit" type="submit" value="Cargar" />
+    </form>
+</div>
+
+<div class="col-12">
+    <a asp-controller="Pedido" asp-action="Index" class="btn btn-primary">Ver Listado</a>
+</div>

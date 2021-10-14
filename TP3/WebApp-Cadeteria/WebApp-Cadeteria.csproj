@@ -5,4 +5,8 @@
     <RootNamespace>WebApp_Cadeteria</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="NLog" Version="4.7.11" />
+  </ItemGroup>
+
 </Project>

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebApp_Cadeteria
+namespace SistemaCadeteria
 {
     public class Cadeteria
     {
@@ -11,16 +11,18 @@ namespace WebApp_Cadeteria
         private List<Cadete> listadoDeCadetes;
 
         public string Nombre { get => nombre; set => nombre = value; }
-        internal List<Cadete> ListadoDeCadetes { get => listadoDeCadetes; set => listadoDeCadetes = value; }
+        public List<Cadete> ListadoDeCadetes { get => listadoDeCadetes; set => listadoDeCadetes = value; }
 
-        public Cadeteria(string nombreCadeteria, int id, string nombre, string direccion, string telefono)
+        public Cadeteria(string nombreCadeteria)
         {
             this.nombre = nombreCadeteria;
-            Cadete c = new Cadete(id, nombre, direccion, telefono);
-            listadoDeCadetes.Add(c);
+            listadoDeCadetes = new List<Cadete>();
         }
 
-
+        public void AgregarCadete(Cadete cadete)
+        {
+            listadoDeCadetes.Add(cadete);
+        }
         public void mostrarCadetes()
         {
             Console.WriteLine("Listado de cadetes");

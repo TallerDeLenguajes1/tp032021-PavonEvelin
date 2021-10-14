@@ -29,12 +29,12 @@ namespace WebApp_Cadeteria.Controllers
             return View();
         }
 
-        public string altaCadetes(string nombreCadeteria, int id, string nombre, string direccion, string telefono)
+        /*public string altaCadetes(string nombreCadeteria, int id, string nombre, string direccion, string telefono)
         {
             try
             {
                 Cadeteria cadeteria = new Cadeteria(nombreCadeteria, id, nombre, direccion, telefono);
-                cadeteria.agregarCadete(id, nombre, direccion, telefono);
+                //cadeteria.agregarCadete(id, nombre, direccion, telefono);
                 //Console.WriteLine("Agregado exitoso!\n\n");
                 cadeteria.mostrarCadetes();
                 return "Agregado exitoso!\n";
@@ -45,7 +45,7 @@ namespace WebApp_Cadeteria.Controllers
                 return "Ingreso de datos invalido\n";
             }
             
-        }
+        }*/
 
         public IActionResult mostrarCadetes()
         {

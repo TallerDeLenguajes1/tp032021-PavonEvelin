@@ -8,11 +8,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApp_Cadeteria.Models;
 
 namespace WebApp_Cadeteria
 {
     public class Startup
     {
+        static DBTemporal DB = new DBTemporal();
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -24,6 +26,7 @@ namespace WebApp_Cadeteria
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddSingleton(DB);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

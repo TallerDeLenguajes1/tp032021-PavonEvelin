@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebApp_Cadeteria
+namespace WebApp_Cadeteria.Models
 {
     public class Cadete
     {
@@ -18,7 +18,7 @@ namespace WebApp_Cadeteria
         public string Nombre { get => nombre; set => nombre = value; }
         public string Direccion { get => direccion; set => direccion = value; }
         public string Telefono { get => telefono; set => telefono = value; }
-        internal List<Pedidos> ListaDePedidos { get => listaDePedidos; set => listaDePedidos = value; }
+        public List<Pedidos> ListaDePedidos { get => listaDePedidos; set => listaDePedidos = value; }
 
         public Cadete(int id, string nombre, string direccion, string telefono)
         {
@@ -26,6 +26,12 @@ namespace WebApp_Cadeteria
             this.nombre = nombre;
             this.direccion = direccion;
             this.telefono = telefono;
+            listaDePedidos = new List<Pedidos>();
+        }
+
+        public Cadete()
+        {
+            listaDePedidos = new List<Pedidos>();
         }
 
         public void CargarPedido(Pedidos p_pedido)
