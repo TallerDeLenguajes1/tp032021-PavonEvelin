@@ -43,3 +43,4 @@ C:\RepoGit-Taller2\tp032021-PavonEvelin\TP3\WebApp-Cadeteria\obj\Debug\net5.0\We
 C:\RepoGit-Taller2\tp032021-PavonEvelin\TP3\WebApp-Cadeteria\obj\Debug\net5.0\ref\WebApp-Cadeteria.dll
 C:\RepoGit-Taller2\tp032021-PavonEvelin\TP3\WebApp-Cadeteria\obj\Debug\net5.0\WebApp-Cadeteria.pdb
 C:\RepoGit-Taller2\tp032021-PavonEvelin\TP3\WebApp-Cadeteria\obj\Debug\net5.0\WebApp-Cadeteria.genruntimeconfig.cache
+C:\RepoGit-Taller2\tp032021-PavonEvelin\TP3\WebApp-Cadeteria\bin\Debug\net5.0\Archivos\Cadetes.json

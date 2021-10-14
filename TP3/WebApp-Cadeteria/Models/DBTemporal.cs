@@ -12,14 +12,15 @@ namespace WebApp_Cadeteria.Models
     {
         //public Cadeteria Cadeteria { get; set; }
 
-        string path = @"C:\RepoGit-Taller2\tp032021-PavonEvelin\TP3\WebApp-Cadeteria\Archivos";
+        string pathCadetes = @"C:\RepoGit-Taller2\tp032021-PavonEvelin\TP3\WebApp-Cadeteria\Archivos\Cadetes.json";
+        string pathPedidos = @"C:\RepoGit-Taller2\tp032021-PavonEvelin\TP3\WebApp-Cadeteria\Archivos\Pedidos.json";
         public DBTemporal()
         {
 
-            if (!File.Exists(path))
+            if (!File.Exists(pathCadetes))
             {
                 // File.Create(path);
-                using (FileStream miArchivo = new FileStream(path, FileMode.Create))
+                using (FileStream miArchivo = new FileStream(pathCadetes, FileMode.Create))
                 {
                     using (StreamWriter writer = new StreamWriter(miArchivo))
                     {
@@ -37,7 +38,7 @@ namespace WebApp_Cadeteria.Models
                 List<Cadete> cadetes = GetCadetes();
                 cadetes.Add(cadete);
                 string CadetesJson = JsonSerializer.Serialize(cadetes);
-                using (FileStream archivo = new FileStream(path, FileMode.Create))
+                using (FileStream archivo = new FileStream(pathCadetes, FileMode.Create))
                 {
                     using (StreamWriter writer = new StreamWriter(archivo))
                     {
@@ -57,9 +58,9 @@ namespace WebApp_Cadeteria.Models
         {
             List<Cadete> CadetesJson = null;
 
-            if (!File.Exists(path))
+            if (!File.Exists(pathCadetes))
             {
-                using (FileStream miArchivo = new FileStream(path, FileMode.Create))
+                using (FileStream miArchivo = new FileStream(pathCadetes, FileMode.Create))
                 {
                     using (StreamWriter writer = new StreamWriter(miArchivo))
                     {
@@ -72,7 +73,7 @@ namespace WebApp_Cadeteria.Models
 
             try
             {
-                using (FileStream archivo = new FileStream(path, FileMode.Open))
+                using (FileStream archivo = new FileStream(pathCadetes, FileMode.Open))
                 {
                     using (StreamReader reader = new StreamReader(archivo))
                     {
@@ -95,6 +96,73 @@ namespace WebApp_Cadeteria.Models
                 string error = ex.ToString();
             }
             return CadetesJson;
+        }
+
+        public void SavePedido(Pedidos pedido)
+        {
+            try
+            {
+                List<Pedidos> pedidos = GetPedidos();
+                pedidos.Add(pedido);
+                string PedidosJson = JsonSerializer.Serialize(pedidos);
+                using (FileStream archivo = new FileStream(pathPedidos, FileMode.Create))
+                {
+                    using (StreamWriter writer = new StreamWriter(archivo))
+                    {
+                        writer.Write(PedidosJson);
+                        writer.Close();
+                        writer.Dispose();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string error = ex.ToString();
+            }
+        }
+
+        public List<Pedidos> GetPedidos()
+        {
+            List<Pedidos> PedidosJson = null;
+
+            if (!File.Exists(pathPedidos))
+            {
+                using (FileStream miArchivo = new FileStream(pathPedidos, FileMode.Create))
+                {
+                    using (StreamWriter writer = new StreamWriter(miArchivo))
+                    {
+                        writer.Write("");
+                        writer.Close();
+                        writer.Dispose();
+                    }
+                }
+            }
+
+            try
+            {
+                using (FileStream archivo = new FileStream(pathPedidos, FileMode.Open))
+                {
+                    using (StreamReader reader = new StreamReader(archivo))
+                    {
+                        string pedidos = reader.ReadToEnd();
+                        reader.Close();
+                        reader.Dispose();
+                        if (pedidos != "")
+                        {
+                            PedidosJson = JsonSerializer.Deserialize<List<Pedidos>>(pedidos);
+                        }
+                        else
+                        {
+                            PedidosJson = new List<Pedidos>();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string error = ex.ToString();
+            }
+            return PedidosJson;
         }
     }
 }

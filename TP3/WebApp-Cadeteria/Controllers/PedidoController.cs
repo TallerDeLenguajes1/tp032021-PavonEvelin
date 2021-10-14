@@ -23,12 +23,12 @@ namespace WebApp_Cadeteria.Controllers
         
         public IActionResult Index()
         {
-            return View(_DB.Cadeteria.Pedidos);
+            return View(_DB);
         }
 
         public IActionResult CrearPedido()
         {
-            return View(_DB.Cadeteria.Cadetes);
+            return View(_DB.GetCadetes());
         }
 
         public IActionResult altaPedidos(string observacion, string estado, string nombreCliente, string direccion, string telefono, string nombreCadete)
@@ -41,7 +41,8 @@ namespace WebApp_Cadeteria.Controllers
                     idCliente++;
                     numPedido++;
                     Pedidos pedido = new Pedidos(numPedido, observacion, estado, idCliente, nombreCliente, direccion, telefono);
-                    _DB.Cadeteria.Pedidos.Add(pedido);
+                    //_DB.Cadeteria.Pedidos.Add(pedido);
+                    _DB.SavePedido(pedido);
                 }
                 return Redirect("Index");
             }
@@ -49,6 +50,28 @@ namespace WebApp_Cadeteria.Controllers
             {
                 Console.WriteLine("Ingreso de datos invalido\n");
                 throw;
+            }
+        }
+
+        public IActionResult AsignarCadeteAPedido(int IdCadete, int IdPedido)
+        {
+            QuitarPedidoDeCadete(IdPedido);
+            if (IdCadete != 0)
+            {
+                Cadete cadete = _DB.GetCadetes().Where(a => a.Id == IdCadete).First();
+                Pedidos pedido = _DB.GetPedidos().Where(a => a.Numero == IdPedido).First();
+                cadete.ListaDePedidos.Add(pedido);
+            }
+            
+            return Redirect("Index");
+        }
+
+        public void QuitarPedidoDeCadete(int IdPedido)
+        {
+            Pedidos pedido = _DB.GetPedidos().Where(pedid => pedid.Numero == IdPedido).First();
+            foreach (var cadete in _DB.GetCadetes())
+            {
+                cadete.ListaDePedidos.Remove(pedido);
             }
         }
     }
