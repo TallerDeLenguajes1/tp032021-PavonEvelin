@@ -17,6 +17,10 @@ namespace WebApp_Cadeteria.Models
         public string Direccion { get => direccion; set => direccion = value; }
         public string Telefono { get => telefono; set => telefono = value; }
 
+        public Cliente()
+        {
+
+        }
         public Cliente(int id, string nombre, string direccion, string telefono)
         {
             this.id = id;

@@ -31,5 +31,9 @@ namespace WebApp_Cadeteria.Models
             this.cliente = new Cliente(id, nombre, direccion, telefono);
         }
 
+        public Pedidos()
+        {
+            this.cliente = new Cliente();
+        }
     }
 }

@@ -31,6 +31,8 @@ namespace WebApp_Cadeteria.Models
                 }
             }
         }
+
+        // M E T O D O S    D E    C A D E T E
         public void SaveCadete(Cadete cadete)
         {
             try
@@ -98,6 +100,8 @@ namespace WebApp_Cadeteria.Models
             return CadetesJson;
         }
 
+
+        // M E T O D O S    D E    P E D I D O
         public void SavePedido(Pedidos pedido)
         {
             try
@@ -164,5 +168,9 @@ namespace WebApp_Cadeteria.Models
             }
             return PedidosJson;
         }
+
+
+
+
     }
 }

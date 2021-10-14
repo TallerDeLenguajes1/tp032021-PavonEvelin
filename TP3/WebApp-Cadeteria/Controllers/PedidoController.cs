@@ -10,8 +10,7 @@ namespace WebApp_Cadeteria.Controllers
 {
     public class PedidoController : Controller
     {
-        
-        static int numPedido = 0;
+        static int numPedido;
         static int idCliente = 0;
         private readonly ILogger<PedidoController> _logger;
         private readonly DBTemporal _DB;
@@ -28,20 +27,19 @@ namespace WebApp_Cadeteria.Controllers
 
         public IActionResult CrearPedido()
         {
-            return View(_DB.GetCadetes());
+            return View();
         }
 
-        public IActionResult altaPedidos(string observacion, string estado, string nombreCliente, string direccion, string telefono, string nombreCadete)
+        public IActionResult altaPedidos(string observacion, string estado, string nombreCliente, string direccion, string telefono)
         {
             try
             {
-                if (observacion != null && nombreCliente != null && estado != null && nombreCadete != null)
+                if (observacion != null && nombreCliente != null && estado != null)
                 {
                     
                     idCliente++;
-                    numPedido++;
+                    numPedido = (_DB.GetPedidos().Count() + 1);
                     Pedidos pedido = new Pedidos(numPedido, observacion, estado, idCliente, nombreCliente, direccion, telefono);
-                    //_DB.Cadeteria.Pedidos.Add(pedido);
                     _DB.SavePedido(pedido);
                 }
                 return Redirect("Index");
@@ -68,11 +66,24 @@ namespace WebApp_Cadeteria.Controllers
 
         public void QuitarPedidoDeCadete(int IdPedido)
         {
-            Pedidos pedido = _DB.GetPedidos().Where(pedid => pedid.Numero == IdPedido).First();
+
+            foreach (var pedido in _DB.GetPedidos())
+            {
+                if (pedido.Numero == IdPedido)
+                {
+                    foreach (var cadete in _DB.GetCadetes())
+                    {
+                        cadete.ListaDePedidos.Remove(pedido);
+                    }
+                    break;
+                }
+            }
+            //Pedidos pedido = _DB.GetPedidos().Where(pedid => pedid.Numero == IdPedido).First();
+            /*
             foreach (var cadete in _DB.GetCadetes())
             {
                 cadete.ListaDePedidos.Remove(pedido);
-            }
+            }*/
         }
     }
 }

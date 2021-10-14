@@ -19,6 +19,8 @@
             <th scope="col">Nombre Cliente</th>
             <th scope="col">Direccion Cliente</th>
             <th scope="col">Telefono Cliente</th>
+            <th scope="col">Cadete</th>
+            <th scope="col"></th>
         </tr>
     </thead>
     <tbody>
@@ -27,9 +29,10 @@
             <form asp-action="AsignarCadeteAPedido">
             <tr>
                 <th scope="row">@item.Numero</th>
-                <td hidden><input name="IdPedido" value="@item.Numero"/></td>
+                <td hidden><input name="IdPedido" value="@item.Numero" /></td>
                 <td>@item.Observacion</td>
                 <td>@item.Estado</td>
+                <td>@item.Cliente.Id</td>
                 <td>@item.Cliente.Nombre</td>
                 <td>@item.Cliente.Direccion</td>
                 <td>@item.Cliente.Telefono</td>
