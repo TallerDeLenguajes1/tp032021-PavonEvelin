@@ -20,7 +20,7 @@
             <th scope="col">Direccion Cliente</th>
             <th scope="col">Telefono Cliente</th>
             <th scope="col">Cadete</th>
-            <th scope="col"></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -43,7 +43,7 @@
                         {
                             @if (cadete.ListaDePedidos.Exists(a => a.Numero == item.Numero))
                             {
-                                <option selected value="@cadete.Id">@cadete.Nombre (@cadete.ListaDePedidos.Count())</option>
+                                <option selected="selected" value="@cadete.Id">@cadete.Nombre (@cadete.ListaDePedidos.Count())</option>
                             }
                             else
                             {

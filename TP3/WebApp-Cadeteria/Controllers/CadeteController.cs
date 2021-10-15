@@ -48,5 +48,57 @@ namespace WebApp_Cadeteria.Controllers
             }
 
         }
+
+        public IActionResult EliminarCadete(int id)
+        {
+            _DB.EliminarCadete(id);
+            return Redirect("Index");
+        }
+
+        public IActionResult ModificarCadete(int id)
+        {
+            Cadete cadeteADevolver = null;
+            foreach (var cadete in _DB.GetCadetes())
+            {
+                if (cadete.Id == id)
+                {
+                    cadeteADevolver = cadete;
+                    break;
+                }
+            }
+
+            if (cadeteADevolver != null)
+            {
+                return View(cadeteADevolver);
+            }
+            else
+            {
+                return Redirect("Index");
+            }
+            
+        }
+
+        public IActionResult ModificarCadete2(int id, string nombre, string direccion, string telefono)
+        {
+            Cadete cadeteAModificar = null;
+            foreach (var cadete in _DB.GetCadetes())
+            {
+                if (cadete.Id == id)
+                {
+                    cadeteAModificar = cadete;
+                    break;
+                }
+            }
+
+            if (cadeteAModificar != null)
+            {
+                cadeteAModificar.Nombre = nombre;
+                cadeteAModificar.Direccion = direccion;
+                cadeteAModificar.Telefono = telefono;
+                _DB.ModificarCadete(cadeteAModificar);
+            }
+
+            return Redirect("Index");
+        }
     }
 }

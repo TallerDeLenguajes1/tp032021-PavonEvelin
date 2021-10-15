@@ -100,6 +100,57 @@ namespace WebApp_Cadeteria.Models
             return CadetesJson;
         }
 
+        public void ModificarCadete(Cadete cadete)
+        {
+            List<Cadete> listaCadetes = GetCadetes();
+
+            try
+            {
+                Cadete cadeteAModificar = listaCadetes.Where(cad => cad.Id == cadete.Id).Single();
+                if (cadeteAModificar != null)
+                {
+                    cadeteAModificar.Nombre = cadete.Nombre;
+                    cadeteAModificar.Direccion = cadete.Direccion;
+                    cadeteAModificar.Telefono = cadete.Telefono;
+
+                    string cadetesJson = JsonSerializer.Serialize(listaCadetes);
+                    using (FileStream archivo = new FileStream(pathCadetes, FileMode.Create))
+                    {
+                        using (StreamWriter writer = new StreamWriter(archivo))
+                        {
+                            writer.Write(cadetesJson);
+                            writer.Close();
+                            writer.Dispose();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string error = ex.ToString();
+            }
+        }
+
+        public void EliminarCadete(int id)
+        {
+            List<Cadete> listaCadetes = GetCadetes();
+
+            Cadete cadeteAEliminar = listaCadetes.Where(cadete => cadete.Id == id).First();
+            listaCadetes.Remove(cadeteAEliminar);
+
+            string cadetesJson = JsonSerializer.Serialize(listaCadetes);
+            using (FileStream archivo = new FileStream(pathCadetes, FileMode.Create))
+            {
+                using (StreamWriter writer = new StreamWriter(archivo))
+                {
+                    writer.Write(cadetesJson);
+                    writer.Close();
+                    writer.Dispose();
+                }
+            }
+        }
+
+
 
         // M E T O D O S    D E    P E D I D O
         public void SavePedido(Pedidos pedido)
@@ -169,7 +220,52 @@ namespace WebApp_Cadeteria.Models
             return PedidosJson;
         }
 
+        public void AsignarPedidoAlCadete(Cadete cadete)
+        {
+            List<Cadete> listaCadetes = GetCadetes();
 
+            try
+            {
+                Cadete cadeteSeleccionado = listaCadetes.Where(cad => cad.Id == cadete.Id).Single();
+                if (cadeteSeleccionado != null)
+                {
+                    cadeteSeleccionado.ListaDePedidos = cadete.ListaDePedidos;
+
+                    string cadetesJson = JsonSerializer.Serialize(listaCadetes);
+                    using (FileStream archivo = new FileStream(pathCadetes, FileMode.Create))
+                    {
+                        using (StreamWriter writer = new StreamWriter(archivo))
+                        {
+                            writer.Write(cadetesJson);
+                            writer.Close();
+                            writer.Dispose();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string error = ex.ToString();
+            }
+        }
+
+        public void QuitarPedidoAlCadete(Pedidos pedido)
+        {
+            List<Pedidos> listaPedidos = GetPedidos();
+
+            try
+            {
+                Pedidos pedidoSeleccionado = listaPedidos.Where(ped => ped.Numero == pedido.Numero).Single();
+                foreach (var cadete in GetCadetes())
+                {
+                    cadete.ListaDePedidos.Remove(pedidoSeleccionado);
+                }
+            }
+            catch (Exception ex)
+            {
+                string error = ex.ToString();
+            }
+        }
 
 
     }

@@ -59,6 +59,7 @@ namespace WebApp_Cadeteria.Controllers
                 Cadete cadete = _DB.GetCadetes().Where(a => a.Id == IdCadete).First();
                 Pedidos pedido = _DB.GetPedidos().Where(a => a.Numero == IdPedido).First();
                 cadete.ListaDePedidos.Add(pedido);
+                _DB.AsignarPedidoAlCadete(cadete);
             }
             
             return Redirect("Index");
@@ -66,24 +67,32 @@ namespace WebApp_Cadeteria.Controllers
 
         public void QuitarPedidoDeCadete(int IdPedido)
         {
-
-            foreach (var pedido in _DB.GetPedidos())
+            Pedidos pedido = _DB.GetPedidos().Where(pedid => pedid.Numero == IdPedido).First();
+            foreach (var cadete in _DB.GetCadetes())
             {
-                if (pedido.Numero == IdPedido)
-                {
-                    foreach (var cadete in _DB.GetCadetes())
-                    {
-                        cadete.ListaDePedidos.Remove(pedido);
-                    }
-                    break;
-                }
+                cadete.ListaDePedidos.Remove(pedido);
             }
-            //Pedidos pedido = _DB.GetPedidos().Where(pedid => pedid.Numero == IdPedido).First();
+
+            _DB.GetCadetes().ForEach(cad => cad.ListaDePedidos.Remove(pedido));
+            _DB
+
             /*
             foreach (var cadete in _DB.GetCadetes())
             {
                 cadete.ListaDePedidos.Remove(pedido);
-            }*/
+            }
+            
+          foreach (var pedido in _DB.GetPedidos())
+          {
+              if (pedido.Numero == IdPedido)
+              {
+                  foreach (var cadete in _DB.GetCadetes())
+                  {
+                      cadete.ListaDePedidos.Remove(pedido);
+                  }
+                  break;
+              }
+          }*/
         }
     }
 }
