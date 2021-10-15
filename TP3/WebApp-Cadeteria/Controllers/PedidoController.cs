@@ -74,7 +74,7 @@ namespace WebApp_Cadeteria.Controllers
             }
 
             _DB.GetCadetes().ForEach(cad => cad.ListaDePedidos.Remove(pedido));
-            _DB
+            //_DB
 
             /*
             foreach (var cadete in _DB.GetCadetes())

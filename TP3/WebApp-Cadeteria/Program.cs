@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using NLog;
 
 namespace WebApp_Cadeteria
 {
@@ -13,7 +14,27 @@ namespace WebApp_Cadeteria
     {
         public static void Main(string[] args)
         {
+            
             CreateHostBuilder(args).Build().Run();
+            /*
+            var logger = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
+            try
+            {
+
+                CreateHostBuilder(args).Build().Run();
+            }
+            catch (Exception exception)
+            {
+                //NLog: catch setup errors
+                logger.Error(exception, "Excepcion encontrada");
+
+                throw;
+            }
+            finally
+            {
+                // Ensure to flush and stop internal timers/threads before application-exit (Avoid segmentation fault on Linux)
+                NLog.LogManager.Shutdown();
+            }*/
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -22,5 +43,12 @@ namespace WebApp_Cadeteria
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
+                /*.ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                    logging.SetMinimumLevel(LogLevel.Trace);
+                })
+                .UseNLog();*/  // NLog: Setup NLog for Dependency injection;
     }
 }

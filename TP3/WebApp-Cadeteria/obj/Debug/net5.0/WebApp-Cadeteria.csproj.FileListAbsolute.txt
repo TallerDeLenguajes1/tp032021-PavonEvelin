@@ -46,3 +46,4 @@ C:\RepoGit-Taller2\tp032021-PavonEvelin\TP3\WebApp-Cadeteria\obj\Debug\net5.0\We
 C:\RepoGit-Taller2\tp032021-PavonEvelin\TP3\WebApp-Cadeteria\bin\Debug\net5.0\Archivos\Cadetes.json
 C:\RepoGit-Taller2\tp032021-PavonEvelin\TP3\WebApp-Cadeteria\bin\Debug\net5.0\Archivos\Pedidos.json
 C:\RepoGit-Taller2\tp032021-PavonEvelin\TP3\WebApp-Cadeteria\obj\Debug\net5.0\Razor\Views\Cadete\ModificarCadete.cshtml.g.cs
+C:\RepoGit-Taller2\tp032021-PavonEvelin\TP3\WebApp-Cadeteria\bin\Debug\net5.0\nlog.config
