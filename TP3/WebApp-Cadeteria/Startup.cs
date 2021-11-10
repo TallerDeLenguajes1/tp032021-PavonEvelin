@@ -25,8 +25,10 @@ namespace WebApp_Cadeteria
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            RepositorioCadete RepoCadetes = new RepositorioCadete(Configuration.GetConnectionString("Default"));
+            services.AddSingleton(RepoCadetes);
             services.AddControllersWithViews();
-            services.AddSingleton(DB);
+           // services.AddSingleton(DB);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

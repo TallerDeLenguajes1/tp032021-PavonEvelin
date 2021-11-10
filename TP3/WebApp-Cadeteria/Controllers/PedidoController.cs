@@ -10,14 +10,15 @@ namespace WebApp_Cadeteria.Controllers
 {
     public class PedidoController : Controller
     {
+        
         static int numPedido;
         static int idCliente = 0;
         private readonly ILogger<PedidoController> _logger;
         private readonly DBTemporal _DB;
-        public PedidoController(ILogger<PedidoController> logger, DBTemporal DB)
+        public PedidoController(ILogger<PedidoController> logger)
         {
             _logger = logger;
-            _DB = DB;
+            //_DB = DB;
         }
         
         public IActionResult Index()
@@ -92,7 +93,7 @@ namespace WebApp_Cadeteria.Controllers
                   }
                   break;
               }
-          }*/
-        }
+          }
+        }*/
     }
 }
