@@ -1,6 +1,11 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\TP3",
+    "\\TP3\\WebApp-Cadeteria",
+    "\\TP3\\WebApp-Cadeteria\\Controllers",
+    "\\TP3\\WebApp-Cadeteria\\Models"
   ],
+  "SelectedNode": "\\TP3\\WebApp-Cadeteria\\Controllers\\PedidoController.cs",
   "PreviewInSolutionExplorer": false
 }

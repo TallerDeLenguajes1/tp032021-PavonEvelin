@@ -14,16 +14,18 @@ namespace WebApp_Cadeteria.Controllers
         static int numPedido;
         static int idCliente = 0;
         private readonly ILogger<PedidoController> _logger;
-        private readonly DBTemporal _DB;
-        public PedidoController(ILogger<PedidoController> logger)
+        //private readonly DBTemporal _DB;
+        private readonly RepositorioPedido repoPedidos;
+        public PedidoController(ILogger<PedidoController> logger, RepositorioPedido RepoPedidos)
         {
             _logger = logger;
             //_DB = DB;
+            repoPedidos = RepoPedidos;
         }
         
         public IActionResult Index()
         {
-            return View(_DB);
+            return View(repoPedidos);
         }
 
         public IActionResult CrearPedido()

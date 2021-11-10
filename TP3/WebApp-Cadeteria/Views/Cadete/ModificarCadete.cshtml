@@ -7,16 +7,13 @@
 @model Cadete
 
 <div class="text-center">
-    <h2 class="display-4">Alta de Cadetes</h2>
+    <h2 class="display-4">Modificacion de Cadete</h2>
     <form asp-action="ModificarCadete2" asp-controller="Cadete" method="post">
         <input hidden type="text" name="id" value="@Model.Id" id="id" />
         <label>Nombre: <input type="text" name="nombre" value="@Model.Nombre" id="nombre" /></label>
         <label>Direccion: <input type="text" name="direccion" value="@Model.Direccion" id="direccion" /></label>
         <label>Telefono: <input type="text" name="telefono" value="@Model.Telefono" id="telefono" /></label>
-        <input id="Submit" type="submit" value="Cargar" />
+        <input id="Submit" type="submit" value="Cargar" onclick="return confirm('Seguro que desea guardar los cambios?')"/>
     </form>
 </div>
 
-<div class="col-12">
-    <a asp-controller="Cadete" asp-action="Index" class="btn btn-primary">Ver Listado</a>
-</div>

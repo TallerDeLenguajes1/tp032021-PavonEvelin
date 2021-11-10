@@ -75,14 +75,14 @@ namespace WebApp_Cadeteria.Models
             }
         }
 
-        public void DeleteCadete(Cadete cadete)
+        public void DeleteCadete(int p_id_cadete)
         {
             string SQLQuery = "UPDATE cadetes SET activo_cadete = 0 WHERE id_cadete = @id_cadete";
             using(SQLiteConnection conexion = new SQLiteConnection(connectionString))
             {
                 using(SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion))
                 {
-                    command.Parameters.AddWithValue("@id_cadete", cadete.Id);
+                    command.Parameters.AddWithValue("@id_cadete", p_id_cadete);
                     conexion.Open();
                     command.ExecuteNonQuery();
                     conexion.Close();

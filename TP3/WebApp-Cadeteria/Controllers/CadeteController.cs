@@ -56,6 +56,7 @@ namespace WebApp_Cadeteria.Controllers
 
         public IActionResult EliminarCadete(int id)
         {
+            repoCadetes.DeleteCadete(id);
             //_DB.EliminarCadete(id);
             return Redirect("Index");
         }
@@ -83,12 +84,10 @@ namespace WebApp_Cadeteria.Controllers
             
         }
 
-        /*
-
         public IActionResult ModificarCadete2(int id, string nombre, string direccion, string telefono)
         {
             Cadete cadeteAModificar = null;
-            foreach (var cadete in _DB.GetCadetes())
+            foreach (var cadete in repoCadetes.getAll())
             {
                 if (cadete.Id == id)
                 {
@@ -102,10 +101,10 @@ namespace WebApp_Cadeteria.Controllers
                 cadeteAModificar.Nombre = nombre;
                 cadeteAModificar.Direccion = direccion;
                 cadeteAModificar.Telefono = telefono;
-                _DB.ModificarCadete(cadeteAModificar);
+                //_DB.ModificarCadete(cadeteAModificar);
+                repoCadetes.UpdateCadete(cadeteAModificar);
             }
-
             return Redirect("Index");
-        }*/
+        }
     }
 }
