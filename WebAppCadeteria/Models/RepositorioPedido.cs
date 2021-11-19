@@ -70,7 +70,6 @@ namespace WebApp_Cadeteria.Models
             }
         }
 
-        // consultar
         public Pedidos GetPedidoPorId(int idPedido)
         {
             Pedidos pedidoADevolver = new Pedidos();
@@ -97,34 +96,34 @@ namespace WebApp_Cadeteria.Models
             }
             return pedidoADevolver;
         }
-
-        //consultar
-        public bool PerteneceIdCadeteAPedido(int idCadete, int idPedido)
+        
+        public int TieneElPedidoUnCadete( int idPedido)
         {
+            int idCadete = -1;
             using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
             {
                 conexion.Open();
-                string SQLQuery = "SELECT * FROM pedidos WHERE id_pedido = @idPedido AND id_cadete = @idCadete";
+                string SQLQuery = "SELECT id_cadete FROM pedidos WHERE id_pedido = @idPedido";
                 SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion);
-                using (SQLiteDataReader DataReader = command.ExecuteReader())
+               using (SQLiteDataReader DataReader = command.ExecuteReader())
                 {
                     command.Parameters.AddWithValue("@idPedido", idPedido);
-                    command.Parameters.AddWithValue("@idCadete", idCadete);
-                    conexion.Open();
-                    if (command.ExecuteNonQuery() != 0) 
+                    if (DataReader.Read())
                     {
-                        conexion.Close();
-                        return true;
+                        var idCadeteObject = DataReader["id_cadete"];
+                        if (idCadeteObject!=null)
+                        {
+                            idCadete = Convert.ToInt32(idCadeteObject);
+                        }
                     }
-                    else
-                    {
-                        conexion.Close();
-                        return false;
-                    }
+                    DataReader.Close();
+                    conexion.Close();
                 }
             }
+            return idCadete;
         }
-        public void AsignarCadeteAlPedido(Cadete cadete, Pedidos pedido)
+
+        public void AsignarCadeteAlPedido(int idCadete, int idPedido)
         {
             try
             {
@@ -133,8 +132,8 @@ namespace WebApp_Cadeteria.Models
                 {
                     using (SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion))
                     {
-                        command.Parameters.AddWithValue("@id_cadete", cadete.Id);
-                        command.Parameters.AddWithValue("@id_pedido", pedido.Numero);
+                        command.Parameters.AddWithValue("@id_cadete", idCadete);
+                        command.Parameters.AddWithValue("@id_pedido", idPedido);
                         conexion.Open();
                         command.ExecuteNonQuery();
                         conexion.Close();
@@ -148,7 +147,7 @@ namespace WebApp_Cadeteria.Models
 
         }
 
-        public void QuitarPedidoAlCadete(Pedidos pedido)
+        public void QuitarPedidoAlCadete(int idPedido)
         {
             try
             {
@@ -157,7 +156,7 @@ namespace WebApp_Cadeteria.Models
                 {
                     using (SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion))
                     {
-                        command.Parameters.AddWithValue("@id_pedido", pedido.Numero);
+                        command.Parameters.AddWithValue("@id_pedido", idPedido);
                         conexion.Open();
                         command.ExecuteNonQuery();
                         conexion.Close();

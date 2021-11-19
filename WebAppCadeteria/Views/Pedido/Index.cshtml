@@ -24,7 +24,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.repoPedido.getAll())
+        @foreach (var item in Model.listaPedidos)
         {
             <form asp-action="AsignarCadeteAPedido">
                 <tr>
@@ -39,10 +39,10 @@
                     <td>
                         <select name="IdCadete" class="form-control form-control-lg">
                             <option value="0">Sin Cadete</option>
-                            @foreach (var cadete in Model.repoCadete.getAll())
+                            @foreach (var cadete in Model.listaCadetes)
                             {
                                 //me tengo que fijar si el pedido tiene el id del cadete
-                                @if (Model.repoPedido.PerteneceIdCadeteAPedido(cadete.Id, item.Numero))
+                                @if (item.idCadete == cadete.Id)
                                 {
                                     <option selected="selected" value="@cadete.Id">@cadete.Nombre</option>
                                 }

@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApp_Cadeteria.Models;
 using WebApp_Cadeteria.Models.ViewModels;
+using AutoMapper;
 
 namespace WebApp_Cadeteria.Controllers
 {
@@ -15,21 +17,32 @@ namespace WebApp_Cadeteria.Controllers
         static int numPedido;
         //static int idCliente = 0;
         private readonly ILogger<PedidoController> _logger;
-        private readonly RepositorioPedido repoPedidos;
+        private readonly IRepositorioPedido repoPedidos;
+        private readonly IRepositorioCadete repoCadetes;
+        private readonly IMapper mapper;
 
         //private readonly DBTemporal _DB;
         //private readonly DatosPedido DatosPedido;
-        public PedidoController(ILogger<PedidoController> logger, RepositorioPedido RepoPedidos)
+        public PedidoController(ILogger<PedidoController> logger, IRepositorioPedido RepoPedidos, IRepositorioCadete RepoCadetes, IMapper mapper)
         {
             _logger = logger;
             repoPedidos = RepoPedidos;
+            repoCadetes = RepoCadetes;
+            this.mapper = mapper;
             //_DB = DB;
             //DatosPedido = datosPedido;
         }
 
         public IActionResult Index()
         {
-            return View(new ListarPedidosViewModel());
+            var ListarPedidosViewModel = new ListarPedidosViewModel();
+            ListarPedidosViewModel.listaCadetes  = mapper.Map<List<CadeteViewModel>>(repoCadetes.getAll());
+            ListarPedidosViewModel.listaPedidos =mapper.Map<List<PedidosViewModel>>(repoPedidos.getAll());
+            foreach (var item in ListarPedidosViewModel.listaPedidos)
+            {
+                item.idCadete = repoPedidos.TieneElPedidoUnCadete(item.Numero);
+            }
+            return View(ListarPedidosViewModel);
         }
 
         public IActionResult CrearPedido()
@@ -59,13 +72,10 @@ namespace WebApp_Cadeteria.Controllers
         
         public IActionResult AsignarCadeteAPedido(int IdCadete, int IdPedido)
         {
-            ListarPedidosViewModel cadetesPedidosVM = new ListarPedidosViewModel(); //Mmmmmmmm
             QuitarPedidoDeCadete(IdPedido);
             if (IdCadete != 0)
             {
-                Cadete cadete = cadetesPedidosVM.repoCadete.GetCadetePorId(IdCadete);
-                Pedidos pedido = repoPedidos.GetPedidoPorId(IdPedido);
-                repoPedidos.AsignarCadeteAlPedido(cadete, pedido);
+                repoPedidos.AsignarCadeteAlPedido(IdCadete, IdPedido);
                 //cadete.ListaDePedidos.Add(pedido);
                 //_DB.AsignarPedidoAlCadete(cadete);
             }
@@ -75,8 +85,7 @@ namespace WebApp_Cadeteria.Controllers
 
         public void QuitarPedidoDeCadete(int IdPedido)
         {
-            Pedidos pedido = repoPedidos.GetPedidoPorId(IdPedido);
-            repoPedidos.QuitarPedidoAlCadete(pedido);
+            repoPedidos.QuitarPedidoAlCadete(IdPedido);
             /*
             foreach (var cadete in _DB.GetCadetes())
             {

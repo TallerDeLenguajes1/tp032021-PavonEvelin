@@ -28,6 +28,7 @@ namespace WebApp_Cadeteria.Controllers
         public IActionResult Index()
         {
             var listadoCadetesVM = mapper.Map<List<CadeteViewModel>>(repoCadetes.getAll());
+            
             return View(listadoCadetesVM);
         }
 
