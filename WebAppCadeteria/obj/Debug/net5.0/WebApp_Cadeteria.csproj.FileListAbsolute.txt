@@ -1,0 +1,8 @@
+C:\RepoGit-Taller2\TP3\WebAppCadeteria\obj\Debug\net5.0\WebApp_Cadeteria.csproj.AssemblyReference.cache
+C:\RepoGit-Taller2\TP3\WebAppCadeteria\obj\Debug\net5.0\WebApp_Cadeteria.GeneratedMSBuildEditorConfig.editorconfig
+C:\RepoGit-Taller2\TP3\WebAppCadeteria\obj\Debug\net5.0\WebApp_Cadeteria.AssemblyInfoInputs.cache
+C:\RepoGit-Taller2\TP3\WebAppCadeteria\obj\Debug\net5.0\WebApp_Cadeteria.AssemblyInfo.cs
+C:\RepoGit-Taller2\TP3\WebAppCadeteria\obj\Debug\net5.0\WebApp_Cadeteria.csproj.CoreCompileInputs.cache
+C:\RepoGit-Taller2\TP3\WebAppCadeteria\obj\Debug\net5.0\WebApp_Cadeteria.MvcApplicationPartsAssemblyInfo.cache
+C:\RepoGit-Taller2\TP3\WebAppCadeteria\obj\Debug\net5.0\WebApp_Cadeteria.RazorAssemblyInfo.cache
+C:\RepoGit-Taller2\TP3\WebAppCadeteria\obj\Debug\net5.0\WebApp_Cadeteria.RazorAssemblyInfo.cs

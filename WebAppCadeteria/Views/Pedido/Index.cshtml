@@ -27,44 +27,44 @@
         @foreach (var item in Model.repoPedido.getAll())
         {
             <form asp-action="AsignarCadeteAPedido">
-            <tr>
-                <th scope="row">@item.Numero</th>
-                <td hidden><input name="IdPedido" value="@item.Numero" /></td>
-                <td>@item.Observacion</td>
-                <td>@item.Estado</td>
-                <td>@item.Cliente.Id</td>
-                <td>@item.Cliente.Nombre</td>
-                <td>@item.Cliente.Direccion</td>
-                <td>@item.Cliente.Telefono</td>
-                <td>
-                    <select name="IdCadete" class="form-control form-control-lg">
-                        <option value="0">Sin Cadete</option>
-                        @foreach (var cadete in Model.repoCadete.getAll())
-                        {
-                            //me tengo que fijar si el pedido tiene el id del cadete
-                            @if (Model.repoPedido.PerteneceIdCadeteAPedido(cadete.Id, item.Numero))
+                <tr>
+                    <th scope="row">@item.Numero</th>
+                    <td hidden><input name="IdPedido" value="@item.Numero" /></td>
+                    <td>@item.Observacion</td>
+                    <td>@item.Estado</td>
+                    <td>@item.Cliente.Id</td>
+                    <td>@item.Cliente.Nombre</td>
+                    <td>@item.Cliente.Direccion</td>
+                    <td>@item.Cliente.Telefono</td>
+                    <td>
+                        <select name="IdCadete" class="form-control form-control-lg">
+                            <option value="0">Sin Cadete</option>
+                            @foreach (var cadete in Model.repoCadete.getAll())
                             {
-                                <option selected="selected" value="@cadete.Id">@cadete.Nombre</option>
+                                //me tengo que fijar si el pedido tiene el id del cadete
+                                @if (Model.repoPedido.PerteneceIdCadeteAPedido(cadete.Id, item.Numero))
+                                {
+                                    <option selected="selected" value="@cadete.Id">@cadete.Nombre</option>
+                                }
+                                else 
+                                {
+                                    <option value="@cadete.Id">@cadete.Nombre</option>
+                                }
+                                /*@if (cadete.ListaDePedidos.Exists(a => a.Numero == item.Numero))
+                                {
+                                    <option selected="selected" value="@cadete.Id">@cadete.Nombre (@cadete.ListaDePedidos.Count())</option>
+                                }
+                                else
+                                {
+                                    <option value="@cadete.Id">@cadete.Nombre</option>
+                                }*/
                             }
-                            else 
-                            {
-                                <option value="@cadete.Id">@cadete.Nombre</option>
-                            }
-                            /*@if (cadete.ListaDePedidos.Exists(a => a.Numero == item.Numero))
-                            {
-                                <option selected="selected" value="@cadete.Id">@cadete.Nombre (@cadete.ListaDePedidos.Count())</option>
-                            }
-                            else
-                            {
-                                <option value="@cadete.Id">@cadete.Nombre</option>
-                            }*/
-                        }
-                    </select>
-                </td>
-                <td>
-                    <button type="submit">Elegir Cadete</button>
-                </td>
-            </tr>
+                        </select>
+                    </td>
+                    <td>
+                        <button type="submit">Elegir Cadete</button>
+                    </td>
+                </tr>
             </form>
         }
     </tbody>

@@ -13,7 +13,7 @@ namespace WebApp_Cadeteria.Controllers
     {
 
         static int numPedido;
-        static int idCliente = 0;
+        //static int idCliente = 0;
         private readonly ILogger<PedidoController> _logger;
         private readonly RepositorioPedido repoPedidos;
 

@@ -70,6 +70,7 @@ namespace WebApp_Cadeteria.Models
             }
         }
 
+        // consultar
         public Pedidos GetPedidoPorId(int idPedido)
         {
             Pedidos pedidoADevolver = new Pedidos();
@@ -97,6 +98,7 @@ namespace WebApp_Cadeteria.Models
             return pedidoADevolver;
         }
 
+        //consultar
         public bool PerteneceIdCadeteAPedido(int idCadete, int idPedido)
         {
             using (SQLiteConnection conexion = new SQLiteConnection(connectionString))

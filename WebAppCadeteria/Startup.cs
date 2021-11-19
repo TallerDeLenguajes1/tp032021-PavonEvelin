@@ -30,6 +30,13 @@ namespace WebApp_Cadeteria
             Configuration.GetConnectionString("Default");
             services.AddControllersWithViews();
             services.AddAutoMapper(typeof(WebApp_Cadeteria.PerfilDeMapeo));
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(3600);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
             //services.AddSingleton(DB);
         }
 
@@ -50,6 +57,8 @@ namespace WebApp_Cadeteria
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseSession();
 
             app.UseAuthorization();
 
