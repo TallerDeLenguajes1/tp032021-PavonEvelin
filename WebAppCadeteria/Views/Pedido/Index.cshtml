@@ -4,7 +4,7 @@
 @{
 }
 
-@model DBTemporal
+@model WebApp_Cadeteria.Models.ViewModels.ListarPedidosViewModel
 
 <h1 class="display-4">Listado de Pedidos</h1>
 <a class="btn-info btn-success btn-lg" asp-action="CrearPedido">Crear Pedido</a>
@@ -24,7 +24,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.GetPedidos())
+        @foreach (var item in Model.repoPedido.getAll())
         {
             <form asp-action="AsignarCadeteAPedido">
             <tr>
@@ -39,16 +39,25 @@
                 <td>
                     <select name="IdCadete" class="form-control form-control-lg">
                         <option value="0">Sin Cadete</option>
-                        @foreach (var cadete in Model.GetCadetes())
+                        @foreach (var cadete in Model.repoCadete.getAll())
                         {
-                            @if (cadete.ListaDePedidos.Exists(a => a.Numero == item.Numero))
+                            //me tengo que fijar si el pedido tiene el id del cadete
+                            @if (Model.repoPedido.PerteneceIdCadeteAPedido(cadete.Id, item.Numero))
+                            {
+                                <option selected="selected" value="@cadete.Id">@cadete.Nombre</option>
+                            }
+                            else 
+                            {
+                                <option value="@cadete.Id">@cadete.Nombre</option>
+                            }
+                            /*@if (cadete.ListaDePedidos.Exists(a => a.Numero == item.Numero))
                             {
                                 <option selected="selected" value="@cadete.Id">@cadete.Nombre (@cadete.ListaDePedidos.Count())</option>
                             }
                             else
                             {
                                 <option value="@cadete.Id">@cadete.Nombre</option>
-                            }
+                            }*/
                         }
                     </select>
                 </td>

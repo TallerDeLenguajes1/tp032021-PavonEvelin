@@ -14,7 +14,9 @@ namespace WebApp_Cadeteria
 {
     public class Startup
     {
-        static DBTemporal DB = new DBTemporal();
+        //static DBTemporal DB = new DBTemporal();
+        //static RepositorioCadete repoCadete = new RepositorioCadete();
+        //static RepositorioPedido repoPedido = new RepositorioPedido();
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -25,8 +27,10 @@ namespace WebApp_Cadeteria
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            Configuration.GetConnectionString("Default");
             services.AddControllersWithViews();
-            services.AddSingleton(DB);
+            services.AddAutoMapper(typeof(WebApp_Cadeteria.PerfilDeMapeo));
+            //services.AddSingleton(DB);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -30,13 +30,42 @@ namespace WebApp_Cadeteria.Models
                 {
                     while(DataReader.Read())
                     {
-                        Cadete cadete = new Cadete(Convert.ToInt32(DataReader["id_cadete"]),DataReader["nombre_cadete"].ToString(), DataReader["direccion_cadete"].ToString(), DataReader["telefono_cadete"].ToString());
+                        Cadete cadete = new Cadete(Convert.ToInt32(DataReader["id_cadete"]),
+                                                    DataReader["nombre_cadete"].ToString(), 
+                                                    DataReader["direccion_cadete"].ToString(), 
+                                                    DataReader["telefono_cadete"].ToString());
                         ListadoCadetes.Add(cadete);
                     }
                     conexion.Close();
                 }
             }
             return ListadoCadetes;
+        }
+
+        public Cadete GetCadetePorId(int idCadete)
+        {
+            Cadete cadeteADevolver = new Cadete();
+            using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
+            {
+                conexion.Open();
+                string SQLQuery = "SELECT * FROM cadetes WHERE id_cadete = @idCadete";
+                SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion);
+                using (SQLiteDataReader DataReader = command.ExecuteReader())
+                {
+                    command.Parameters.AddWithValue("idCadete", idCadete);
+                    command.ExecuteNonQuery();
+                    if (DataReader.Read())
+                    {
+
+                        cadeteADevolver = new Cadete(Convert.ToInt32(DataReader["id_cadete"]),
+                                                    DataReader["nombre_cadete"].ToString(),
+                                                    DataReader["direccion_cadete"].ToString(),
+                                                    DataReader["telefono_cadete"].ToString());
+                    }
+                    conexion.Close();
+                }
+            }
+            return cadeteADevolver;
         }
 
         public void SaveCadete(Cadete cadete)

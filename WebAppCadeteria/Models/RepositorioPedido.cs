@@ -70,6 +70,58 @@ namespace WebApp_Cadeteria.Models
             }
         }
 
+        public Pedidos GetPedidoPorId(int idPedido)
+        {
+            Pedidos pedidoADevolver = new Pedidos();
+            using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
+            {
+                conexion.Open();
+                string SQLQuery = "SELECT * FROM pedidos WHERE id_pedido = @idPedido";
+                SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion);
+                using (SQLiteDataReader DataReader = command.ExecuteReader())
+                {
+                    if (DataReader.Read())
+                    {
+                        pedidoADevolver = new Pedidos(Convert.ToInt32(DataReader["id_pedido"]),
+                                                    DataReader["observacion"].ToString(),
+                                                    DataReader["estado_pedido"].ToString(),
+                                                    Convert.ToInt32(DataReader["id_cliente"]),
+                                                    DataReader["nombre_cliente"].ToString(),
+                                                    DataReader["direccion_cliente"].ToString(),
+                                                    DataReader["telefono_cliente"].ToString());
+                        //pedidoADevolver = pedido;
+                    }
+                    conexion.Close();
+                }
+            }
+            return pedidoADevolver;
+        }
+
+        public bool PerteneceIdCadeteAPedido(int idCadete, int idPedido)
+        {
+            using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
+            {
+                conexion.Open();
+                string SQLQuery = "SELECT * FROM pedidos WHERE id_pedido = @idPedido AND id_cadete = @idCadete";
+                SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion);
+                using (SQLiteDataReader DataReader = command.ExecuteReader())
+                {
+                    command.Parameters.AddWithValue("@idPedido", idPedido);
+                    command.Parameters.AddWithValue("@idCadete", idCadete);
+                    conexion.Open();
+                    if (command.ExecuteNonQuery() != 0) 
+                    {
+                        conexion.Close();
+                        return true;
+                    }
+                    else
+                    {
+                        conexion.Close();
+                        return false;
+                    }
+                }
+            }
+        }
         public void AsignarCadeteAlPedido(Cadete cadete, Pedidos pedido)
         {
             try
