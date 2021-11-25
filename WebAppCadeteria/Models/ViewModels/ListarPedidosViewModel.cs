@@ -7,7 +7,7 @@ namespace WebApp_Cadeteria.Models.ViewModels
 {
     public class ListarPedidosViewModel
     {
-        public List<CadeteViewModel> listaCadetes {get;set;} 
-        public List<PedidosViewModel> listaPedidos {get;set;}
+        public List<CadeteViewModel> listaCadetes { get; set; } 
+        public List<PedidosViewModel> listaPedidos { get; set; }
     }
 }

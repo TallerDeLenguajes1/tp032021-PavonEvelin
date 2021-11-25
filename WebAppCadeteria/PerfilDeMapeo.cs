@@ -12,7 +12,7 @@ namespace WebApp_Cadeteria
     {
         public PerfilDeMapeo()
         {
-            CreateMap<Cadete, CadeteViewModel>().ReverseMap();
+            CreateMap<Cadete, CadeteViewModel>().ReverseMap(); 
         }
     }
 }

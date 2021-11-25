@@ -2,7 +2,7 @@
     ViewData["Title"] = "Cadete";
 }
 
-@model List<Cadete>
+@model WebApp_Cadeteria.Models.ViewModels.ListarCadetesViewModel
 
 <h1 class="display-4">Listado de Cadetes</h1>
 <a class="btn-info btn-success btn-lg" asp-action="CrearCadete">Crear Cadete</a>
@@ -19,7 +19,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.listaCadetes)
         {
         <tr>
             <th scope="row">@item.Id</th>
