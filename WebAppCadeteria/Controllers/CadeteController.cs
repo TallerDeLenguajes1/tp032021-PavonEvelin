@@ -64,6 +64,7 @@ namespace WebApp_Cadeteria.Controllers
 
         }
 
+        [Http]
         public IActionResult EliminarCadete(int id)
         {
             repoCadetes.DeleteCadete(id);
