@@ -8,20 +8,20 @@ namespace WebApp_Cadeteria.Models.ViewModels
 {
     public class CadeteViewModel
     {
-        private int id;
+        public int id;
 
         [Required(ErrorMessage = "El campo Nombre es requerido")]
         [Display(Name = "Nombre")]
         [StringLength(100)]
-        private string nombre;
+        public string nombre;
         
         [StringLength(80)]
-        private string direccion;
+        public string direccion;
         
         [StringLength(15)]
-        private string telefono;
+        public string telefono;
         
-        private List<PedidosViewModel> listaDePedidos;
+        public List<PedidosViewModel> listaDePedidos;
 
         public int Id { get => id; set => id = value; }
         public string Nombre { get => nombre; set => nombre = value; }

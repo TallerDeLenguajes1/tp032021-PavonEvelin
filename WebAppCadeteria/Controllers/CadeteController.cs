@@ -7,12 +7,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebApp_Cadeteria.Models;
 using WebApp_Cadeteria.Models.ViewModels;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebApp_Cadeteria.Controllers
 {
     public class CadeteController : Controller
     {
-        static int id;
+        //static int id;
         private readonly ILogger<CadeteController> _logger;
         //private readonly DBTemporal _DB;
         private readonly IRepositorioCadete repoCadetes;
@@ -37,24 +38,27 @@ namespace WebApp_Cadeteria.Controllers
             return View();
         }
 
-        public IActionResult altaCadetes(string nombre, string direccion, string telefono)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult altaCadetes(CadeteViewModel cadete)
         {
             try
             {
-                if (nombre != null)
+                if (ModelState.IsValid)
                 {
-                    id = (repoCadetes.getAll().Count() + 1);
-                    //id = (_DB.GetCadetes().Count() + 1);
-                    Cadete cadete = new Cadete(id, nombre, direccion, telefono);
-                    repoCadetes.SaveCadete(cadete);
-                    //_DB.Cadeteria.Cadetes.Add(cadete);
-                    //_DB.SaveCadete(cadete);
+                    Cadete NewCadete = mapper.Map<Cadete>(cadete);
+                    repoCadetes.SaveCadete(NewCadete);
+                    return RedirectToAction(nameof(Index));
                 }
-                return Redirect("Index");
+                else
+                {
+                    return RedirectToAction(nameof(CrearCadete));
+                }
+                
             }
             catch (Exception)
             {
-                Console.WriteLine("Ingreso de datos invalido\n");
+                //usar nlog
                 throw;
             }
 
