@@ -17,9 +17,9 @@ namespace WebApp_Cadeteria.Models
             //conexion = new SQLiteConnection(connectionString);
         }
 
-        public bool ValidarUser(Usuario usuario)
+        public bool ValidateUser(Usuario usuario)
         {
-            bool validado = false;
+            bool validated = false;
 
             using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
             {
@@ -35,18 +35,18 @@ namespace WebApp_Cadeteria.Models
                     {
                         if (DataReader.Read())
                         {
-                            validado = true;
+                            validated = true;
                         }
                     }
                     conexion.Close();
                 }
-                return validado;
+                return validated;
             }
         }
 
         public void SaveUser(Usuario usuario)
         {
-            string SQLQuery = "INSERT INTO usuarios VALUES(@userName, @password, @nombre_usuario, 1)";
+            string SQLQuery = "INSERT INTO usuarios VALUES(@userName, @password, @nombre_usuario, 1,@rol_usuario)";
             using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
             {
                 using (SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion))
@@ -54,6 +54,7 @@ namespace WebApp_Cadeteria.Models
                     command.Parameters.AddWithValue("@userName", usuario.UserName);
                     command.Parameters.AddWithValue("@password", usuario.Password);
                     command.Parameters.AddWithValue("@nombre_usuario", usuario.Nombre);
+                    command.Parameters.AddWithValue("@rol_usuario", Convert.ToInt32(usuario.Rol));
                     conexion.Open();
                     command.ExecuteNonQuery();
                     conexion.Close();
@@ -72,6 +73,22 @@ namespace WebApp_Cadeteria.Models
                     command.Parameters.AddWithValue("@userName", usuario.UserName);
                     command.Parameters.AddWithValue("@password", usuario.Password);
                     command.Parameters.AddWithValue("@nombre_usuario", usuario.Nombre);
+                    command.Parameters.AddWithValue("@id_usuario", usuario.Id);
+                    conexion.Open();
+                    command.ExecuteNonQuery();
+                    conexion.Close();
+                }
+            }
+        }
+
+        public void UpdateRolUser(Usuario usuario)
+        {
+            string SQLQuery = "UPDATE usuarios SET rol_usuario = @rol_usuario WHERE id_usuario = @id_usuario";
+            using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
+            {
+                using (SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion))
+                {
+                    command.Parameters.AddWithValue("@rol_usuario", Convert.ToInt32(usuario.Rol));
                     command.Parameters.AddWithValue("@id_usuario", usuario.Id);
                     conexion.Open();
                     command.ExecuteNonQuery();

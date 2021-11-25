@@ -8,8 +8,11 @@ namespace WebApp_Cadeteria.Models
     public interface IRepositorioCadete
     {
         List<Cadete> getAll();
+        Cadete GetCadetePorId(int idCadete);
         void SaveCadete(Cadete cadete);
         void UpdateCadete(Cadete cadete);
-        void DeleteCadete(int p_id_cadete); 
+        void DeleteCadete(int p_id_cadete);
+
+        int GetIdCadeteByIdUser(int idUsuario);
     }
 }

@@ -5,15 +5,20 @@
 }
 
 <h1 class="display-4">Login de Usuarios</h1>
-<form asp-action="login" method="post">
-  <div class="container">
-    <label for="uname"><b>Username</b></label>
-    <input type="text" placeholder="Enter Username" name="nombre_usuario" required>
-    <label for="psw"><b>Password</b></label>
-    <input type="password" placeholder="Enter Password" name="contrasenia" required>
 
-    <button type="submit">Login</button>
-  </div>
+<form id="login-form" class="form" asp-action="Login" asp-controller="Usuario" method="post">
+    <div class="form-group">
+        <label for="username" class="text-info">Nombre de usuario:</label><br>
+        <input type="text" name="username" id="username" class="form-control" placeholder="Admin">
+    </div>
+    <div class="form-group">
+        <label for="password" class="text-info">Contraseña:</label><br>
+        <input type="text" name="password" id="password" class="form-control" placeholder="Admin">
+    </div>
+    <div class="form-group">
+        <input type="submit" name="submit" class="btn btn-info btn-md" value="Login">
+    </div>
+    <div id="register-link" class="text-right">
+        <a asp-action="AltaUsuario" asp-controller="Usuario" class="text-info">Nuevo Usuario</a>
+    </div>
 </form>
-
-

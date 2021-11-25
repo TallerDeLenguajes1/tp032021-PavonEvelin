@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace WebApp_Cadeteria.Models
 {
-    public enum Rol
+    public enum Roles
     {
         Admin = 2,
         Cadete = 1,
@@ -17,12 +17,12 @@ namespace WebApp_Cadeteria.Models
         private string userName;
         private string password;
         private string nombre;
-        private Rol rol;
+        private Roles rol;
 
         public int Id { get => id; set => id = value; }
         public string UserName { get => userName; set => userName = value; }
         public string Password { get => password; set => password = value; }
         public string Nombre { get => nombre; set => nombre = value; }
-        public Rol Rol { get => rol; set => rol = value; }
+        public Roles Rol { get => rol; set => rol = value; }
     }
 }

@@ -118,5 +118,31 @@ namespace WebApp_Cadeteria.Models
                 }
             }
         }
+
+        public int GetIdCadeteByIdUser(int idUsuario)
+        {
+            int idCadete = -1;
+            using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
+            {
+                string SQLQuery = "SELECT * FROM cadetes WHERE id_usuario = @idUsuario";
+
+                conexion.Open();
+                using (SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion))
+                {
+                    command.Parameters.AddWithValue("@idUsuario", idUsuario);
+                    using (SQLiteDataReader DataReader = command.ExecuteReader())
+                    {
+                        if (DataReader.Read())
+                        {
+                            idCadete = Convert.ToInt32(DataReader["id_cadete"]);
+                        }
+
+                    }
+                }
+                conexion.Close();
+            }
+            return idCadete;
+        }
     }
+
 }
