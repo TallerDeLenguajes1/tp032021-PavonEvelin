@@ -70,7 +70,7 @@ namespace WebApp_Cadeteria.Models
 
         public void SaveCadete(Cadete cadete)
         {
-            string SQLQuery = "INSERT INTO Cadetes VALUES(@nombre_cadete, @direccion_cadete, @telefono_cadete,1,1)";
+            string SQLQuery = "INSERT INTO cadetes VALUES(@nombre_cadete, @direccion_cadete, @telefono_cadete,1,1)";
             using(SQLiteConnection conexion = new SQLiteConnection(connectionString))
             {
                 using(SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion))
