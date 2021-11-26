@@ -99,13 +99,13 @@ namespace WebApp_Cadeteria.Models
         
         public int TieneElPedidoUnCadete( int idPedido)
         {
-            int idCadete = -1;
+            int idCadete = -1; 
             using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
             {
                 conexion.Open();
                 string SQLQuery = "SELECT id_cadete FROM pedidos WHERE id_pedido = @idPedido";
                 SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion);
-               using (SQLiteDataReader DataReader = command.ExecuteReader())
+                using (SQLiteDataReader DataReader = command.ExecuteReader())
                 {
                     command.Parameters.AddWithValue("@idPedido", idPedido);
                     if (DataReader.Read())

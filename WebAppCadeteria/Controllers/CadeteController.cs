@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using WebApp_Cadeteria.Models;
 using WebApp_Cadeteria.Models.ViewModels;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 
 namespace WebApp_Cadeteria.Controllers
 {
@@ -28,14 +29,25 @@ namespace WebApp_Cadeteria.Controllers
         }
         public IActionResult Index()
         {
-            var listadoCadetesVM = mapper.Map<List<CadeteViewModel>>(repoCadetes.getAll());
-            
-            return View(listadoCadetesVM);
+            List<Cadete> listadoCadetes = repoCadetes.getAll();
+            var listaCadetesViewModel = mapper.Map<List<CadeteViewModel>>(listadoCadetes);
+            return View(listaCadetesViewModel);
         }
+
 
         public IActionResult CrearCadete()
         {
-            return View();
+            string rol = HttpContext.Session.GetString("Rol");
+            if(rol == "Admin")
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            //Enum.TryParse(rol, out Roles myStatus);
+            
         }
 
         [HttpPost]
@@ -64,29 +76,18 @@ namespace WebApp_Cadeteria.Controllers
 
         }
 
-        [Http]
         public IActionResult EliminarCadete(int id)
         {
             repoCadetes.DeleteCadete(id);
-            //_DB.EliminarCadete(id);
             return Redirect("Index");
         }
 
         public IActionResult ModificarCadete(int id)
         {
-            Cadete cadeteADevolver = null;
-            foreach (var cadete in repoCadetes.getAll())
+            CadeteViewModel cadeteAModificar = mapper.Map<CadeteViewModel>(repoCadetes.GetCadetePorId(id));
+            if (cadeteAModificar != null)
             {
-                if (cadete.Id == id)
-                {
-                    cadeteADevolver = cadete;
-                    break;
-                }
-            }
-
-            if (cadeteADevolver != null)
-            {
-                return View(cadeteADevolver);
+                return View(cadeteAModificar);
             }
             else
             {
@@ -95,24 +96,13 @@ namespace WebApp_Cadeteria.Controllers
 
         }
 
-        public IActionResult ModificarCadete2(int id, string nombre, string direccion, string telefono)
+        [HttpPost]
+        public IActionResult ModificarCadete2(CadeteViewModel cadete)
         {
-            Cadete cadeteAModificar = null;
-            foreach (var cadete in repoCadetes.getAll())
-            {
-                if (cadete.Id == id)
-                {
-                    cadeteAModificar = cadete;
-                    break;
-                }
-            }
+            Cadete cadeteAModificar = mapper.Map<Cadete>(cadete);
 
             if (cadeteAModificar != null)
             {
-                cadeteAModificar.Nombre = nombre;
-                cadeteAModificar.Direccion = direccion;
-                cadeteAModificar.Telefono = telefono;
-                //_DB.ModificarCadete(cadeteAModificar);
                 repoCadetes.UpdateCadete(cadeteAModificar);
             }
             return Redirect("Index");

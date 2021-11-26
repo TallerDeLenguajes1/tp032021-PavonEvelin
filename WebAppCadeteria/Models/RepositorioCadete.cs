@@ -16,56 +16,122 @@ namespace WebApp_Cadeteria.Models
             this.connectionString = connectionString;
             //conexion = new SQLiteConnection(connectionString);
         }
+        /*
+        public List<Cadete> getAllCadetes()
+        {
+            List<Cadete> listaCadetes = new List<Cadete>();
+
+            try
+            {
+                using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
+                {
+                    conexion.Open();
+
+                    string instrucionSQL = "SELECT * FROM Cadetes WHERE cadeteActivo = 1;";
+                    using (SQLiteCommand command = new SQLiteCommand(instrucionSQL, conexion))
+                    {
+                        var DataReader = command.ExecuteReader();
+
+                        while (DataReader.Read())
+                        {
+                            Cadete cadete = new Cadete()
+                            {
+                                Id = Convert.ToInt32(DataReader["cadeteID"]),
+                                Nombre = DataReader["cadeteNombre"].ToString(),
+                                Telefono = DataReader["cadeteTelefono"].ToString(),
+                                Direccion = DataReader["cadeteDireccion"].ToString(),
+                            };
+
+                            listaCadetes.Add(cadete);
+                        }
+
+                        DataReader.Close();
+                    }
+
+                    conexion.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                var mensaje = "Mensaje de error" + ex.Message;
+            }
+
+            return listaCadetes;
+        }*/
 
         public List<Cadete> getAll()
         {
             List<Cadete> ListadoCadetes = new List<Cadete>();
 
-            using(SQLiteConnection conexion = new SQLiteConnection(connectionString))
+            try
             {
-                conexion.Open();
-                string SQLQuery = "SELECT * FROM cadetes WHERE activo_cadete = 1;";
-                SQLiteCommand command = new SQLiteCommand(SQLQuery,conexion);
-                using(SQLiteDataReader DataReader = command.ExecuteReader())
+                using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
                 {
-                    while(DataReader.Read())
+                    conexion.Open();
+                    string SQLQuery = "SELECT * FROM cadetes WHERE activo_cadete = 1;";
+                    using (SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion))
                     {
-                        Cadete cadete = new Cadete(Convert.ToInt32(DataReader["id_cadete"]),
-                                                    DataReader["nombre_cadete"].ToString(), 
-                                                    DataReader["direccion_cadete"].ToString(), 
-                                                    DataReader["telefono_cadete"].ToString());
-                        ListadoCadetes.Add(cadete);
+                        using (SQLiteDataReader DataReader = command.ExecuteReader())
+                        {
+                            while (DataReader.Read())
+                            {
+                                Cadete cadete = new Cadete(Convert.ToInt32(DataReader["id_cadete"]),
+                                                            DataReader["nombre_cadete"].ToString(),
+                                                            DataReader["direccion_cadete"].ToString(),
+                                                            DataReader["telefono_cadete"].ToString());
+                                ListadoCadetes.Add(cadete);
+                            }
+                            DataReader.Close();
+                        }
                     }
                     conexion.Close();
+
                 }
+                return ListadoCadetes;
             }
-            return ListadoCadetes;
+            catch (Exception ex)
+            {
+                var mensaje = "Mensaje de error" + ex.Message;
+                throw;
+            }
+            
         }
 
         public Cadete GetCadetePorId(int idCadete)
         {
             Cadete cadeteADevolver = new Cadete();
-            using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
+            try
             {
-                conexion.Open();
-                string SQLQuery = "SELECT * FROM cadetes WHERE id_cadete = @idCadete";
-                SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion);
-                using (SQLiteDataReader DataReader = command.ExecuteReader())
+                using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
                 {
-                    command.Parameters.AddWithValue("idCadete", idCadete);
-                    command.ExecuteNonQuery();
-                    if (DataReader.Read())
+                    conexion.Open();
+                    string SQLQuery = "SELECT * FROM cadetes WHERE id_cadete = @idCadete";
+                    using (SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion))
                     {
+                        command.Parameters.AddWithValue("@idCadete", idCadete);
+                        using (SQLiteDataReader DataReader = command.ExecuteReader())
+                        {
+                            if (DataReader.Read())
+                            {
 
-                        cadeteADevolver = new Cadete(Convert.ToInt32(DataReader["id_cadete"]),
-                                                    DataReader["nombre_cadete"].ToString(),
-                                                    DataReader["direccion_cadete"].ToString(),
-                                                    DataReader["telefono_cadete"].ToString());
+                                cadeteADevolver = new Cadete(Convert.ToInt32(DataReader["id_cadete"]),
+                                                            DataReader["nombre_cadete"].ToString(),
+                                                            DataReader["direccion_cadete"].ToString(),
+                                                            DataReader["telefono_cadete"].ToString());
+                            }
+                            DataReader.Close();
+                        }
                     }
                     conexion.Close();
                 }
+                return cadeteADevolver;
             }
-            return cadeteADevolver;
+            catch (Exception ex)
+            {
+                var mensaje = "Mensaje de error" + ex.Message;
+                throw;
+            }
+            
         }
 
         public void SaveCadete(Cadete cadete)
@@ -143,6 +209,8 @@ namespace WebApp_Cadeteria.Models
             }
             return idCadete;
         }
+
+        //public void ActualizarDatos
     }
 
 }

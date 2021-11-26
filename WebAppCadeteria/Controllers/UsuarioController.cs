@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WebApp_Cadeteria.Models;
@@ -43,25 +44,77 @@ namespace WebApp_Cadeteria.Controllers
         {
             try
             {
+
                 if (repoUsuarios.ValidateUser(mapper.Map<Usuario>(usuario)))
                 {
-                    switch (usuario.Rol)
+                    Usuario user = repoUsuarios.GetUser(usuario.UserName, usuario.Password);
+                    //HttpContext.Session.SetString("UserName", usuario.UserName);
+                    HttpContext.Session.SetString("Rol", user.Rol);
+                    /*
+                    if (string.IsNullOrEmpty(HttpContext.Session.GetString("Usuario")))
                     {
-                        case Roles.Admin:
-                            return View("../Admin/AdminPage");
-                        case Roles.Cadete:
+                        HttpContext.Session.SetString("Usuario", usuario.Nombre);
+                        HttpContext.Session.SetString("Rol", usuario.Rol.ToString());
+                    }*/
+                    //var username = HttpContext.Session.GetString("Usuario");
+                    var rol = HttpContext.Session.GetString("Rol");
+                    
+                    
+                    switch (user.Rol)
+                    {
+
+                        case "Admin":
+                            return View("../Administrador/Admin");
+                            break;
+                        case "Cadete":
                             int id_cadete = repoCadetes.GetIdCadeteByIdUser(usuario.Id);
-                            return
-                        case Rol.Cliente:
-                            return 
+                            return View("../Cadete/MostrarCadeteUsuario", mapper.Map<CadeteViewModel>(repoCadetes.GetCadetePorId(id_cadete)));
+                            break;
+                        case "Cliente":
+                            return View("../Cliente/MostrarClienteUsuario");
+                            break;
                         default:
                             return View();
+                            break;
                     }
                 }
                 else
                 {
                     return View(nameof(Login));
                 }
+            }
+            catch (Exception e)
+            {
+                string error = e.Message;
+                return View(nameof(Login));
+            }
+        }
+
+        public IActionResult CrearUsuario()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AltaUsuario(UsuarioViewModel usuario)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    Usuario nuevoUser = mapper.Map<Usuario>(usuario);
+                    repoUsuarios.SaveUser(nuevoUser);
+                    switch (nuevoUser.Rol)
+                    {
+                        case "Cadete":
+                            repoCadetes.SaveCadete(mapper.Map<Cadete>(nuevoUser)); //Duda
+                            break;
+                        //case Roles.Cliente:
+                        default:
+                            break;
+                    }
+                }
+                return View(nameof(Login));
             }
             catch (Exception e)
             {

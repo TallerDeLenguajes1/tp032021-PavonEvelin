@@ -2,7 +2,7 @@
     ViewData["Title"] = "Cadete";
 }
 
-@model WebApp_Cadeteria.Models.ViewModels.ListarCadetesViewModel
+@model IEnumerable<WebApp_Cadeteria.Models.ViewModels.CadeteViewModel>
 
 <h1 class="display-4">Listado de Cadetes</h1>
 <a class="btn-info btn-success btn-lg" asp-action="CrearCadete">Crear Cadete</a>
@@ -10,24 +10,46 @@
 <table class="table table-dark table-striped">
     <thead>
         <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Direccion</th>
-            <th scope="col">Telefono</th>
-            <th scope="col">Eliminar</th>
-            <th scope="col">Modificar</th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Direccion)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Telefono)
+            </th>
+            <th scope="col"></th>
+            <!--<th scope="col">Modificar</th>-->
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.listaCadetes)
+        @foreach (var item in Model)
         {
         <tr>
-            <th scope="row">@item.Id</th>
-            <td>@item.Nombre</td>
-            <td>@item.Direccion</td>
-            <td>@item.Telefono</td>
-            <td><a asp-action="EliminarCadete" asp-route-id="@item.Id" onclick="return confirm('Seguro que desea eliminar este registro?')">Eliminar</a></td>
-            <td><a asp-action="ModificarCadete" asp-route-id="@item.Id">Modificar</a></td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Direccion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefono)
+            </td>
+            <td>
+                @Html.ActionLink("Modificar", "ModificarCadete", new { id = item.Id }) |
+                @Html.ActionLink("Borrar", "EliminarCadete", new { id = item.Id })
+            </td>
+
+            <!--
+    <td><a asp-action="EliminarCadete" asp-route-id="item.Id" onclick="return confirm('Seguro que desea eliminar este registro?')">Eliminar</a></td>
+    <td><a asp-action="ModificarCadete" asp-route-id="item.Id">Modificar</a></td>-->
         </tr>
         }
     </tbody>

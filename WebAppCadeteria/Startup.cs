@@ -15,8 +15,9 @@ namespace WebApp_Cadeteria
     public class Startup
     {
         //static DBTemporal DB = new DBTemporal();
-        static IRepositorioCadete repoCadete = new RepositorioCadete("Data Source=C:\\Users\\Alumno\\Downloads\\Cadeteria.db;Cache=Shared");
-        static IRepositorioPedido repoPedido = new RepositorioPedido("Data Source=C:\\Users\\Alumno\\Downloads\\Cadeteria.db;Cache=Shared");
+        //static IRepositorioCadete repoCadete = new RepositorioCadete(ConnectionString);
+        //static IRepositorioPedido repoPedido = new RepositorioPedido("Data Source=C:\\Users\\eveli\\Downloads\\Cadeteria.db;Cache=Shared");
+        //static RepositorioUsuario repoUsuario = new RepositorioUsuario("Data Source=C:\\Users\\eveli\\Downloads\\Cadeteria.db;Cache=Shared");
 
         public Startup(IConfiguration configuration)
         {
@@ -28,9 +29,15 @@ namespace WebApp_Cadeteria
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton(repoCadete);
-            services.AddSingleton(repoPedido);
-            Configuration.GetConnectionString("Default");
+            var ConnectionStrings = Configuration.GetConnectionString("Default");
+            IRepositorioCadete repoCadetes = new RepositorioCadete(ConnectionStrings);
+            IRepositorioPedido repoPedidos = new RepositorioPedido(ConnectionStrings);
+            RepositorioUsuario repoUsuarios = new RepositorioUsuario(ConnectionStrings);
+            services.AddSingleton(repoCadetes);
+            services.AddSingleton(repoPedidos);
+            services.AddSingleton(repoUsuarios);
+
+            //Configuration.GetConnectionString("Default");
             services.AddControllersWithViews();
             services.AddAutoMapper(typeof(WebApp_Cadeteria.PerfilDeMapeo));
             services.AddDistributedMemoryCache();

@@ -6,15 +6,16 @@ using System.Threading.Tasks;
 
 namespace WebApp_Cadeteria.Models.ViewModels
 {
-   
+    /*
+    public enum Rol
+    {
+        Admin = 2,
+        Cadete = 1,
+        Cliente = 0
+    }*/
     public class UsuarioViewModel
     {
-        public enum Roles
-        {
-            Admin = 2,
-            Cadete = 1,
-            Cliente = 0
-        }
+        
 
         private int id;
 
@@ -36,13 +37,22 @@ namespace WebApp_Cadeteria.Models.ViewModels
         [StringLength(100)]
         private string nombre;
 
+        [StringLength(80)]
+        private string direccion;
+
+        [StringLength(15)]
+        private string telefono;
+
         [Required(ErrorMessage = "El campo Rol es requerido")]
-        private Rol rol;
+        [StringLength(7)]
+        private string rol;
 
         public int Id { get => id; set => id = value; }
         public string UserName { get => userName; set => userName = value; }
         public string Password { get => password; set => password = value; }
         public string Nombre { get => nombre; set => nombre = value; }
-        public Rol Rol { get => rol; set => rol = value; }
+        public string Rol { get => rol; set => rol = value; }
+        public string Direccion { get => direccion; set => direccion = value; }
+        public string Telefono { get => telefono; set => telefono = value; }
     }
 }

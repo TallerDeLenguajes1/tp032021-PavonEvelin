@@ -40,12 +40,5 @@ namespace WebApp_Cadeteria.Models
             jornal += 100;
         }
 
-        public void mostrarInfo()
-        {
-            Console.WriteLine($"Id: {this.id}\n");
-            Console.WriteLine($"Id: {this.nombre}\n");
-            Console.WriteLine($"Id: {this.direccion}\n");
-            Console.WriteLine($"Id: {this.telefono}\n");
-        }
     }
 }

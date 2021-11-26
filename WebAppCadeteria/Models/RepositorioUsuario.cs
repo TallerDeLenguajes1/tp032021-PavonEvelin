@@ -24,7 +24,7 @@ namespace WebApp_Cadeteria.Models
             using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
             {
                 conexion.Open();
-                string SQLQuery = "SELECT * FROM usuarios WHERE userName = @userName AMD password = @password;";
+                string SQLQuery = "SELECT * FROM usuarios WHERE userName = @userName AND password = @password;";
 
                 using (SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion))
                 {
@@ -54,7 +54,7 @@ namespace WebApp_Cadeteria.Models
                     command.Parameters.AddWithValue("@userName", usuario.UserName);
                     command.Parameters.AddWithValue("@password", usuario.Password);
                     command.Parameters.AddWithValue("@nombre_usuario", usuario.Nombre);
-                    command.Parameters.AddWithValue("@rol_usuario", Convert.ToInt32(usuario.Rol));
+                    command.Parameters.AddWithValue("@rol_usuario", usuario.Rol);
                     conexion.Open();
                     command.ExecuteNonQuery();
                     conexion.Close();
@@ -88,7 +88,7 @@ namespace WebApp_Cadeteria.Models
             {
                 using (SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion))
                 {
-                    command.Parameters.AddWithValue("@rol_usuario", Convert.ToInt32(usuario.Rol));
+                    command.Parameters.AddWithValue("@rol_usuario", usuario.Rol);
                     command.Parameters.AddWithValue("@id_usuario", usuario.Id);
                     conexion.Open();
                     command.ExecuteNonQuery();
@@ -137,6 +137,40 @@ namespace WebApp_Cadeteria.Models
                     conexion.Close();
                 }
                 return idUsuario;
+            }
+        }
+
+        public Usuario GetUser(string userName, string password)
+        {
+            Usuario user = new Usuario();
+
+            using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
+            {
+                conexion.Open();
+                string SQLQuery = "SELECT * FROM usuarios WHERE userName = @userName AND password = @password";
+
+                using (SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion))
+                {
+                    command.Parameters.AddWithValue("@userName", userName);
+                    command.Parameters.AddWithValue("@password", password);
+
+                    using (SQLiteDataReader DataReader = command.ExecuteReader())
+                    {
+                        if (DataReader.Read())
+                        {
+                            user = new Usuario(Convert.ToInt32(DataReader["id_usuario"]),
+                                                            DataReader["userName"].ToString(),
+                                                            DataReader["password"].ToString(),
+                                                            DataReader["nombre_usuario"].ToString(),
+                                                            DataReader["direccion_usuario"].ToString(),
+                                                            DataReader["telefono_usuario"].ToString(),
+                                                            DataReader["rol_usuario"].ToString());
+                        }
+                        DataReader.Close();
+                    }
+                    conexion.Close();
+                }
+                return user;
             }
         }
     }

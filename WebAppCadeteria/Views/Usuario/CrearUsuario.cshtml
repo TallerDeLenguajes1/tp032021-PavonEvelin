@@ -1,0 +1,17 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+<div class="text-center">
+    <h2 class="display-4">Alta de Usuario</h2>
+    <form asp-action="altaUsuario" asp-controller="Usuario" method="post">
+        <label>User Name: <input type="text" name="userName" value="" id="userName" /></label>
+        <label>Password: <input type="text" name="password" value="" id="password" /></label>
+        <label>Nombre Completo: <input type="text" name="nombre" value="" id="nombre" /></label>
+        <label>Rol: <input type="text" name="rol" value="" id="rol" /></label>
+        <input id="Submit" type="submit" value="Cargar" />
+    </form>
+</div>

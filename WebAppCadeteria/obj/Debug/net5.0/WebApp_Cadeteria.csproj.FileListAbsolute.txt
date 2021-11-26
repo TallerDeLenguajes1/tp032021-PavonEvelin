@@ -72,3 +72,6 @@ C:\tp032021-PavonEvelin\WebAppCadeteria\bin\Debug\net5.0\runtimes\win\lib\netsta
 C:\tp032021-PavonEvelin\WebAppCadeteria\obj\Debug\net5.0\WebApp_Cadeteria.Views.pdb
 C:\tp032021-PavonEvelin\WebAppCadeteria\obj\Debug\net5.0\WebApp_Cadeteria.csproj.CopyComplete
 C:\tp032021-PavonEvelin\WebAppCadeteria\obj\Debug\net5.0\WebApp_Cadeteria.genruntimeconfig.cache
+C:\tp032021-PavonEvelin\WebAppCadeteria\obj\Debug\net5.0\Razor\Views\Administrador\Admin.cshtml.g.cs
+C:\tp032021-PavonEvelin\WebAppCadeteria\obj\Debug\net5.0\Razor\Views\Cadete\MostrarCadeteUsuario.cshtml.g.cs
+C:\tp032021-PavonEvelin\WebAppCadeteria\obj\Debug\net5.0\Razor\Views\Usuario\CrearUsuario.cshtml.g.cs
