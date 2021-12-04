@@ -59,20 +59,19 @@ namespace WebApp_Cadeteria.Controllers
                     //var username = HttpContext.Session.GetString("Usuario");
                     var rol = HttpContext.Session.GetString("Rol");
                     
-                    
+
                     switch (user.Rol)
                     {
 
                         case "Admin":
                             return View("../Administrador/Admin");
-                            break;
                         case "Cadete":
                             int id_cadete = repoCadetes.GetIdCadeteByIdUser(usuario.Id);
-                            return View("../Cadete/MostrarCadeteUsuario", mapper.Map<CadeteViewModel>(repoCadetes.GetCadetePorId(id_cadete)));
-                            break;
-                        case "Cliente":
-                            return View("../Cliente/MostrarClienteUsuario");
-                            break;
+                            var cadeteVM = mapper.Map<CadeteViewModel>(repoCadetes.GetCadetePorId(id_cadete));
+                            return View("../Cadete/MostrarCadeteUsuario", cadeteVM);
+                        /*case "Cliente":
+                            //return View("../Cliente/MostrarClienteUsuario", mapper.Map<CadeteViewModel>(repoCadetes.GetCadetePorId(id_cadete)));
+                            break;*/
                         default:
                             return View();
                             break;
@@ -107,19 +106,24 @@ namespace WebApp_Cadeteria.Controllers
                     switch (nuevoUser.Rol)
                     {
                         case "Cadete":
-                            repoCadetes.SaveCadete(mapper.Map<Cadete>(nuevoUser)); //Duda
+                            repoCadetes.SaveCadete(mapper.Map<Cadete>(nuevoUser)); //duda
                             break;
                         //case Roles.Cliente:
                         default:
                             break;
                     }
+                    return RedirectToAction("Index", "Cadete");
                 }
-                return View(nameof(Login));
+                else
+                {
+                    return RedirectToAction("CrearUsuario");
+                }
+                
             }
             catch (Exception e)
             {
                 string error = e.Message;
-                return View(nameof(Login));
+                return RedirectToAction("CrearUsuario");
             }
         }
     }

@@ -15,17 +15,16 @@
             <th scope="col">Nombre</th>
             <th scope="col">Direccion</th>
             <th scope="col">Telefono</th>
-            <!--<th scope="col">Actualizar Datos</th>-->
+            <th scope="col">Actualizar Datos</th>
         </tr>
     </thead>
     <tbody>
-        
         <tr>
             <th scope="row">@Model.Id</th>
             <td>@Model.Nombre</td>
             <td>@Model.Direccion</td>
             <td>@Model.Telefono</td>
-            <!--<td><a asp-action="ModificarCadete" asp-route-id="Model.Id">Actualizar Datos</a></td>-->
+            <td><a asp-action="ModificarCadete" asp-route-id="Model.Id">Actualizar Datos</a></td>
         </tr>
     </tbody>
 </table>

@@ -16,48 +16,6 @@ namespace WebApp_Cadeteria.Models
             this.connectionString = connectionString;
             //conexion = new SQLiteConnection(connectionString);
         }
-        /*
-        public List<Cadete> getAllCadetes()
-        {
-            List<Cadete> listaCadetes = new List<Cadete>();
-
-            try
-            {
-                using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
-                {
-                    conexion.Open();
-
-                    string instrucionSQL = "SELECT * FROM Cadetes WHERE cadeteActivo = 1;";
-                    using (SQLiteCommand command = new SQLiteCommand(instrucionSQL, conexion))
-                    {
-                        var DataReader = command.ExecuteReader();
-
-                        while (DataReader.Read())
-                        {
-                            Cadete cadete = new Cadete()
-                            {
-                                Id = Convert.ToInt32(DataReader["cadeteID"]),
-                                Nombre = DataReader["cadeteNombre"].ToString(),
-                                Telefono = DataReader["cadeteTelefono"].ToString(),
-                                Direccion = DataReader["cadeteDireccion"].ToString(),
-                            };
-
-                            listaCadetes.Add(cadete);
-                        }
-
-                        DataReader.Close();
-                    }
-
-                    conexion.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                var mensaje = "Mensaje de error" + ex.Message;
-            }
-
-            return listaCadetes;
-        }*/
 
         public List<Cadete> getAll()
         {

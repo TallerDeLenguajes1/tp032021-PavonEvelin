@@ -40,7 +40,7 @@ namespace WebApp_Cadeteria.Controllers
             string rol = HttpContext.Session.GetString("Rol");
             if(rol == "Admin")
             {
-                return View();
+                return RedirectToAction("CrearUsuario", "Usuario");
             }
             else
             {
@@ -68,32 +68,49 @@ namespace WebApp_Cadeteria.Controllers
                 }
                 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //usar nlog
-                throw;
+                var mensaje = "Mensaje de error" + ex.Message;
+                return RedirectToAction(nameof(CrearCadete));
+                //throw;
             }
 
         }
 
         public IActionResult EliminarCadete(int id)
         {
-            repoCadetes.DeleteCadete(id);
-            return Redirect("Index");
+            string rol = HttpContext.Session.GetString("Rol");
+            if (rol == "Admin")
+            {
+                repoCadetes.DeleteCadete(id);
+                return Redirect("Index");
+            }
+            else
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            
         }
 
         public IActionResult ModificarCadete(int id)
         {
-            CadeteViewModel cadeteAModificar = mapper.Map<CadeteViewModel>(repoCadetes.GetCadetePorId(id));
-            if (cadeteAModificar != null)
+            string rol = HttpContext.Session.GetString("Rol");
+            if (rol == "Admin" || rol == "Cadete")
             {
-                return View(cadeteAModificar);
+                CadeteViewModel cadeteAModificar = mapper.Map<CadeteViewModel>(repoCadetes.GetCadetePorId(id));
+                if (cadeteAModificar != null)
+                {
+                    return View(cadeteAModificar);
+                }
+                else
+                {
+                    return Redirect("Index");
+                }
             }
             else
             {
-                return Redirect("Index");
+                return RedirectToAction(nameof(Index));
             }
-
         }
 
         [HttpPost]

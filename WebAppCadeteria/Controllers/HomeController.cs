@@ -21,7 +21,7 @@ namespace WebApp_Cadeteria.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index", "Usuario");
         }
 
         public IActionResult Privacy()

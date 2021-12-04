@@ -13,10 +13,6 @@
         <label>Nombre: <input type="text" name="nombre" value="@Model.Nombre" id="nombre" /></label>
         <label>Direccion: <input type="text" name="direccion" value="@Model.Direccion" id="direccion" /></label>
         <label>Telefono: <input type="text" name="telefono" value="@Model.Telefono" id="telefono" /></label>
-        <input id="Submit" type="submit" value="Cargar" />
+        <input id="Submit" type="submit" value="Cargar"  onclick="return confirm('Desea guardar los cambios?')">/>
     </form>
-</div>
-
-<div class="col-12">
-    <a asp-controller="Cadete" asp-action="Index" class="btn btn-primary">Ver Listado</a>
 </div>
