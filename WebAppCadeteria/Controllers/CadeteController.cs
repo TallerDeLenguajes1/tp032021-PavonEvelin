@@ -52,6 +52,7 @@ namespace WebApp_Cadeteria.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        /*
         public IActionResult altaCadetes(CadeteViewModel cadete)
         {
             try
@@ -75,7 +76,7 @@ namespace WebApp_Cadeteria.Controllers
                 //throw;
             }
 
-        }
+        }*/
 
         public IActionResult EliminarCadete(int id)
         {

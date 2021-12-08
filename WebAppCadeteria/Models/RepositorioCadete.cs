@@ -92,9 +92,10 @@ namespace WebApp_Cadeteria.Models
             
         }
 
-        public void SaveCadete(Cadete cadete)
+        public void SaveCadete(Cadete cadete, int id_usuario)
         {
-            string SQLQuery = "INSERT INTO cadetes VALUES(@nombre_cadete, @direccion_cadete, @telefono_cadete,1,1)";
+            string SQLQuery = "INSERT INTO cadetes(nombre_cadete, direccion_cadete, telefono_cadete, activo_cadete, id_cadeteria, " +
+                "id_usuario) VALUES(@nombre_cadete, @direccion_cadete, @telefono_cadete,1,1, @id_usuario)";
             using(SQLiteConnection conexion = new SQLiteConnection(connectionString))
             {
                 using(SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion))
@@ -103,10 +104,12 @@ namespace WebApp_Cadeteria.Models
                     command.Parameters.AddWithValue("@nombre_cadete", cadete.Nombre);
                     command.Parameters.AddWithValue("@direccion_cadete", cadete.Direccion);
                     command.Parameters.AddWithValue("@telefono_cadete", cadete.Telefono);
+                    command.Parameters.AddWithValue("@id_usuario", id_usuario);
                     conexion.Open();
                     command.ExecuteNonQuery();
-                    conexion.Close();
+ 
                 }
+                conexion.Close();
             }
         }
 

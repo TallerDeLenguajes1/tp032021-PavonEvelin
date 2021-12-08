@@ -46,23 +46,32 @@ namespace WebApp_Cadeteria.Models
 
         public void SaveUser(Usuario usuario)
         {
-            string SQLQuery = "INSERT INTO usuarios VALUES(@userName, @password, @nombre_usuario, @direccion_usuario, " +
-                "@telefono_usuario, @rol_usuario, 1)";
-            using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
+            string SQLQuery = "INSERT INTO usuarios(userName, password, nombre_usuario, direccion_usuario, telefono_usuario, " +
+                "rol_usuario, activo_usuario) VALUES(@userName, @password, @nombre_usuario, @direccion_usuario, @telefono_usuario, @rol_usuario, 1)";
+            try
             {
-                using (SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion))
+                using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
                 {
-                    command.Parameters.AddWithValue("@userName", usuario.UserName);
-                    command.Parameters.AddWithValue("@password", usuario.Password);
-                    command.Parameters.AddWithValue("@nombre_usuario", usuario.Nombre);
-                    command.Parameters.AddWithValue("@direccion_usuario", usuario.Direccion);
-                    command.Parameters.AddWithValue("@telefono_usuario", usuario.Telefono);
-                    command.Parameters.AddWithValue("@rol_usuario", usuario.Rol);
-                    conexion.Open();
-                    command.ExecuteNonQuery();
+                    using (SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion))
+                    {
+                        conexion.Open();
+                        command.Parameters.AddWithValue("@userName", usuario.UserName);
+                        command.Parameters.AddWithValue("@password", usuario.Password);
+                        command.Parameters.AddWithValue("@nombre_usuario", usuario.Nombre);
+                        command.Parameters.AddWithValue("@direccion_usuario", usuario.Direccion);
+                        command.Parameters.AddWithValue("@telefono_usuario", usuario.Telefono);
+                        command.Parameters.AddWithValue("@rol_usuario", usuario.Rol);
+                        command.ExecuteNonQuery();
+                    }
                     conexion.Close();
                 }
             }
+            catch (Exception ex)
+            {
+                var mensaje = "Mensaje de error" + ex.Message;
+                throw;
+            }
+            
         }
 
         public void UpdateUser(Usuario usuario)

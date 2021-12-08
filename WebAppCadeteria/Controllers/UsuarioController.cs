@@ -101,18 +101,26 @@ namespace WebApp_Cadeteria.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    Usuario nuevoUser = mapper.Map<Usuario>(usuario);
-                    repoUsuarios.SaveUser(nuevoUser);
-                    switch (nuevoUser.Rol)
+                    if (usuario.Rol == "Cadete" || usuario.Rol == "Cliente")
                     {
-                        case "Cadete":
-                            repoCadetes.SaveCadete(mapper.Map<Cadete>(nuevoUser)); //duda
-                            break;
-                        //case Roles.Cliente:
-                        default:
-                            break;
+                        Usuario nuevoUser = mapper.Map<Usuario>(usuario);
+                        repoUsuarios.SaveUser(nuevoUser);
+                        switch (nuevoUser.Rol)
+                        {
+                            case "Cadete":
+                                repoCadetes.SaveCadete(mapper.Map<Cadete>(nuevoUser), nuevoUser.Id); //duda
+                                break;
+                            //case Roles.Cliente:
+                            default:
+                                break;
+                        }
+                        return RedirectToAction("Index", "Cadete");
                     }
-                    return RedirectToAction("Index", "Cadete");
+                    else
+                    {
+                        return RedirectToAction("CrearUsuario");
+                    }
+                    
                 }
                 else
                 {

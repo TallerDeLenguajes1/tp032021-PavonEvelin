@@ -9,7 +9,7 @@ namespace WebApp_Cadeteria.Models
     {
         List<Cadete> getAll();
         Cadete GetCadetePorId(int idCadete);
-        void SaveCadete(Cadete cadete);
+        void SaveCadete(Cadete cadete, int id_usuario);
         void UpdateCadete(Cadete cadete);
         void DeleteCadete(int p_id_cadete);
 
