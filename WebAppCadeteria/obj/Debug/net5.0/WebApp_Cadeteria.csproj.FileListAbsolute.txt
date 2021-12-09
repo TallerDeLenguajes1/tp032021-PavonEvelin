@@ -78,3 +78,7 @@ C:\tp032021-PavonEvelin\WebAppCadeteria\obj\Debug\net5.0\Razor\Views\Usuario\Cre
 C:\tp032021-PavonEvelin\WebAppCadeteria\obj\Debug\net5.0\Razor\Views\Cliente\MostrarClienteUsuario.cshtml.g.cs
 C:\tp032021-PavonEvelin\WebAppCadeteria\obj\Debug\net5.0\Razor\Views\Cliente\Index.cshtml.g.cs
 C:\tp032021-PavonEvelin\WebAppCadeteria\obj\Debug\net5.0\Razor\Views\Cliente\ModificarCliente.cshtml.g.cs
+C:\tp032021-PavonEvelin\WebAppCadeteria\bin\Debug\net5.0\nlog.config
+C:\tp032021-PavonEvelin\WebAppCadeteria\bin\Debug\net5.0\NLog.dll
+C:\tp032021-PavonEvelin\WebAppCadeteria\bin\Debug\net5.0\NLog.Extensions.Logging.dll
+C:\tp032021-PavonEvelin\WebAppCadeteria\bin\Debug\net5.0\NLog.Web.AspNetCore.dll

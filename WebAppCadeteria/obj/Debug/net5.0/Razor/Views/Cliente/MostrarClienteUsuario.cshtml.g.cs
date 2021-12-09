@@ -28,7 +28,7 @@ using WebApp_Cadeteria.Models;
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"798c4d45895534a32d7148d8a8856c2de6fad406", @"/Views/Cliente/MostrarClienteUsuario.cshtml")]
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"a92313560c3cfb6f246bd708f76a493a657cc982", @"/Views/_ViewImports.cshtml")]
-    public class Views_Cliente_MostrarClienteUsuario : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<WebApp_Cadeteria.Models.ViewModels.ClienteViewModels>
+    public class Views_Cliente_MostrarClienteUsuario : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<WebApp_Cadeteria.Models.ViewModels.ClienteViewModels.ClienteViewModel>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-action", "ModificarCliente", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_1 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-controller", "Cliente", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -156,7 +156,7 @@ using WebApp_Cadeteria.Models;
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
         public global::Microsoft.AspNetCore.Mvc.Rendering.IJsonHelper Json { get; private set; }
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
-        public global::Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper<WebApp_Cadeteria.Models.ViewModels.ClienteViewModels> Html { get; private set; }
+        public global::Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper<WebApp_Cadeteria.Models.ViewModels.ClienteViewModels.ClienteViewModel> Html { get; private set; }
     }
 }
 #pragma warning restore 1591
