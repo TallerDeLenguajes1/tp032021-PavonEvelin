@@ -4,11 +4,11 @@ namespace WebApp_Cadeteria.Models.Repositories
 {
     public interface IRepositorioUsuario
     {
-        void DeleteUser(int id_usuario);
-        Usuario GetUser(string userName, string password);
-        int GetUserID(Usuario usuario);
+        bool ValidateUser(Usuario usuario);
         void SaveUser(Usuario usuario);
         void UpdateUser(Usuario usuario);
-        bool ValidateUser(Usuario usuario);
+        void DeleteUser(int id_usuario);
+        int GetUserID(Usuario usuario);
+        Usuario GetUser(string userName, string password);
     }
 }

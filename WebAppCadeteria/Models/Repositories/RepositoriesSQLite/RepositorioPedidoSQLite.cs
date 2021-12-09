@@ -26,80 +26,108 @@ namespace WebApp_Cadeteria.Models.Repositories.RepositoriesSQLite
         {
             List<Pedidos> ListadoPedidos = new List<Pedidos>();
 
-            using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
+            try
             {
-                conexion.Open();
-                string SQLQuery = "SELECT * FROM pedidos INNER JOIN clientes USING('id_cliente')";
-                SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion);
-                using (SQLiteDataReader DataReader = command.ExecuteReader())
+                using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
                 {
-                    while (DataReader.Read())
+                    conexion.Open();
+                    string SQLQuery = "SELECT * FROM pedidos INNER JOIN clientes USING('id_cliente')";
+                    SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion);
+                    using (SQLiteDataReader DataReader = command.ExecuteReader())
                     {
-                        Pedidos pedido = new Pedidos(Convert.ToInt32(DataReader["id_pedido"]),
-                                                    DataReader["observacion"].ToString(),
-                                                    DataReader["estado_pedido"].ToString(),
-                                                    Convert.ToInt32(DataReader["id_cliente"]),
-                                                    DataReader["nombre_cliente"].ToString(),
-                                                    DataReader["direccion_cliente"].ToString(),
-                                                    DataReader["telefono_cliente"].ToString());
-                        /*var pedido2 = new Pedidos()
+                        while (DataReader.Read())
                         {
-                          Numero =  Convert.ToInt32(DataReader["id_pedido"]),
-                          Observacion =  DataReader["observacion"].ToString(),
-                          Estado = DataReader["estado_pedido"].ToString(),
-                          Cliente = 
-                        };*/
-                        ListadoPedidos.Add(pedido);
+                            Pedidos pedido = new Pedidos(Convert.ToInt32(DataReader["id_pedido"]),
+                                                        DataReader["observacion"].ToString(),
+                                                        DataReader["estado_pedido"].ToString(),
+                                                        Convert.ToInt32(DataReader["id_cliente"]),
+                                                        DataReader["nombre_cliente"].ToString(),
+                                                        DataReader["direccion_cliente"].ToString(),
+                                                        DataReader["telefono_cliente"].ToString());
+                            ListadoPedidos.Add(pedido);
+                        }
+                        conexion.Close();
                     }
-                    conexion.Close();
                 }
+                log.Info("Se obtuvieron los datos de los pedidos con exito");
+                return ListadoPedidos;
             }
-            return ListadoPedidos;
+            catch (Exception ex)
+            {
+                var mensaje = "Mensaje de error" + ex.Message;
+                log.Error("Ocurrio un error al obtener los datos de los pedidos ", mensaje);
+                throw;
+            }
+
+            
         }
 
         public void SavePedido(Pedidos pedido)
         {
             string SQLQuery = "INSERT INTO pedidos VALUES(@id_pedido, @observacion, @estado_pedido, 1,@id_cliente, NULL)";
-            using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
+
+            try
             {
-                using (SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion))
+                using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
                 {
-                    command.Parameters.AddWithValue("@id_pedido", pedido.Numero);
-                    command.Parameters.AddWithValue("@observacion", pedido.Observacion);
-                    command.Parameters.AddWithValue("@estado_pedido", pedido.Estado);
-                    command.Parameters.AddWithValue("@id_cliente", pedido.Cliente.Id);
-                    conexion.Open();
-                    command.ExecuteNonQuery();
-                    conexion.Close();
+                    using (SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion))
+                    {
+                        command.Parameters.AddWithValue("@id_pedido", pedido.Numero);
+                        command.Parameters.AddWithValue("@observacion", pedido.Observacion);
+                        command.Parameters.AddWithValue("@estado_pedido", pedido.Estado);
+                        command.Parameters.AddWithValue("@id_cliente", pedido.Cliente.Id);
+                        conexion.Open();
+                        command.ExecuteNonQuery();
+                        conexion.Close();
+                    }
                 }
+                log.Info("El pedido " + pedido.Numero + " se guardo exitosamente");
             }
+            catch (Exception ex)
+            {
+                var mensaje = "Mensaje de error" + ex.Message;
+                log.Error("Ocurrio un error al guardar el pedido " + pedido.Numero, mensaje);
+                throw;
+            }
+            
         }
 
         public Pedidos GetPedidoPorId(int idPedido)
         {
             Pedidos pedidoADevolver = new Pedidos();
-            using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
+
+            try
             {
-                conexion.Open();
-                string SQLQuery = "SELECT * FROM pedidos WHERE id_pedido = @idPedido";
-                SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion);
-                using (SQLiteDataReader DataReader = command.ExecuteReader())
+                using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
                 {
-                    if (DataReader.Read())
+                    conexion.Open();
+                    string SQLQuery = "SELECT * FROM pedidos WHERE id_pedido = @idPedido";
+                    SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion);
+                    using (SQLiteDataReader DataReader = command.ExecuteReader())
                     {
-                        pedidoADevolver = new Pedidos(Convert.ToInt32(DataReader["id_pedido"]),
-                                                    DataReader["observacion"].ToString(),
-                                                    DataReader["estado_pedido"].ToString(),
-                                                    Convert.ToInt32(DataReader["id_cliente"]),
-                                                    DataReader["nombre_cliente"].ToString(),
-                                                    DataReader["direccion_cliente"].ToString(),
-                                                    DataReader["telefono_cliente"].ToString());
-                        //pedidoADevolver = pedido;
+                        if (DataReader.Read())
+                        {
+                            pedidoADevolver = new Pedidos(Convert.ToInt32(DataReader["id_pedido"]),
+                                                        DataReader["observacion"].ToString(),
+                                                        DataReader["estado_pedido"].ToString(),
+                                                        Convert.ToInt32(DataReader["id_cliente"]),
+                                                        DataReader["nombre_cliente"].ToString(),
+                                                        DataReader["direccion_cliente"].ToString(),
+                                                        DataReader["telefono_cliente"].ToString());
+                        }
+                        conexion.Close();
                     }
-                    conexion.Close();
                 }
+                log.Info("Se obtuvieron los datos del pedido " + idPedido + " exitosamente");
+                return pedidoADevolver;
             }
-            return pedidoADevolver;
+            catch (Exception ex)
+            {
+                var mensaje = "Mensaje de error" + ex.Message;
+                log.Error("Ocurrio un error al obtener los datos del pedido " + idPedido, mensaje);
+                throw;
+            }
+            
         }
         
         public int TieneElPedidoUnCadete( int idPedido)
@@ -130,14 +158,17 @@ namespace WebApp_Cadeteria.Models.Repositories.RepositoriesSQLite
                     }
                     conexion.Close();
                 }
+                log.Info("Se obtuvo el id del cadete que tiene el pedido " + idPedido + " exitosamente");
+                return idCadete;
             }
             catch (Exception ex)
             {
                 var mensaje = "Mensaje de error" + ex.Message;
-                //throw;
+                log.Error("Ocurrio un error al obtener el id del cadete que tiene el pedido " + idPedido, mensaje);
+                throw;
             }
             
-            return idCadete;
+            
         }
 
         public void AsignarCadeteAlPedido(int idCadete, int idPedido)
@@ -156,10 +187,13 @@ namespace WebApp_Cadeteria.Models.Repositories.RepositoriesSQLite
                         conexion.Close();
                     }
                 }
+                log.Info("Se asigno el cadete" + idCadete+ "al pedido" +idPedido + "exitosamente");
             }
             catch (Exception ex)
             {
-                string error = ex.ToString();
+                var mensaje = "Mensaje de error" + ex.Message;
+                log.Error("Ocurrio un error al asignar el cadete" + idCadete + "al pedido" + idPedido, mensaje);
+                throw; ;
             }
 
         }
@@ -179,45 +213,73 @@ namespace WebApp_Cadeteria.Models.Repositories.RepositoriesSQLite
                         conexion.Close();
                     }
                 }
+                log.Info("Se quito el cadete al pedido" + idPedido + "exitosamente");
             }
             catch (Exception ex)
             {
-                string error = ex.ToString();
+                var mensaje = "Mensaje de error" + ex.Message;
+                log.Error("Ocurrio un error al quitar el cadete al pedido" + idPedido, mensaje);
+                throw; ;
             }
 
         }
 
         public void UpdatePedido(Pedidos pedido)
         {
-            string SQLQuery = "UPDATE pedidos SET observacion = @observacion, estado_pedido = @estado_pedido, id_cliente = @id_cliente WHERE id_pedido = @id_pedido";
-            using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
+            string SQLQuery = "UPDATE pedidos SET observacion = @observacion, estado_pedido = @estado_pedido, " +
+                "id_cliente = @id_cliente WHERE id_pedido = @id_pedido";
+
+            try
             {
-                using (SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion))
+                using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
                 {
-                    command.Parameters.AddWithValue("@observacion", pedido.Observacion);
-                    command.Parameters.AddWithValue("@estado_pedido", pedido.Estado);
-                    command.Parameters.AddWithValue("@id_cliente", pedido.Cliente.Id);
-                    command.Parameters.AddWithValue("@id_pedido", pedido.Numero);
-                    conexion.Open();
-                    command.ExecuteNonQuery();
-                    conexion.Close();
+                    using (SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion))
+                    {
+                        command.Parameters.AddWithValue("@observacion", pedido.Observacion);
+                        command.Parameters.AddWithValue("@estado_pedido", pedido.Estado);
+                        command.Parameters.AddWithValue("@id_cliente", pedido.Cliente.Id);
+                        command.Parameters.AddWithValue("@id_pedido", pedido.Numero);
+                        conexion.Open();
+                        command.ExecuteNonQuery();
+                        conexion.Close();
+                    }
                 }
+                log.Info("Se modifico el pedido" + pedido.Numero + "exitosamente");
             }
+            catch (Exception ex)
+            {
+                var mensaje = "Mensaje de error" + ex.Message;
+                log.Error("Ocurrio un error al modificar los datos del pedido " + pedido.Numero, mensaje);
+                throw;
+            }
+            
         }
 
         public void DeletePedido(Pedidos pedido)
         {
             string SQLQuery = "UPDATE pedidos SET activo_pedido = 0 WHERE id_pedido = @id_pedido";
-            using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
+
+            try
             {
-                using (SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion))
+                using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
                 {
-                    command.Parameters.AddWithValue("@id_pedido", pedido.Numero);
-                    conexion.Open();
-                    command.ExecuteNonQuery();
-                    conexion.Close();
+                    using (SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion))
+                    {
+                        command.Parameters.AddWithValue("@id_pedido", pedido.Numero);
+                        conexion.Open();
+                        command.ExecuteNonQuery();
+                        conexion.Close();
+                    }
                 }
+                log.Info("Se desactivo el pedido " + pedido.Numero + " exitosamente");
             }
+            catch (Exception ex)
+            {
+                var mensaje = "Mensaje de error" + ex.Message;
+                log.Error("Ocurrio un error al desactivar el pedido " + pedido.Numero, mensaje);
+                throw;
+            }
+            
         }
     }
 }
