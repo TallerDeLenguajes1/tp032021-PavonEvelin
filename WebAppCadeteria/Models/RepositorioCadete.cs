@@ -163,7 +163,7 @@ namespace WebApp_Cadeteria.Models
                         {
                             idCadete = Convert.ToInt32(DataReader["id_cadete"]);
                         }
-
+                        DataReader.Close();
                     }
                 }
                 conexion.Close();

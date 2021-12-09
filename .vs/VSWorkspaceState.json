@@ -2,8 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\WebAppCadeteria",
-    "\\WebAppCadeteria\\Controllers"
+    "\\WebAppCadeteria\\Controllers",
+    "\\WebAppCadeteria\\Views",
+    "\\WebAppCadeteria\\Views\\Usuario"
   ],
-  "SelectedNode": "\\WebAppCadeteria\\Controllers\\UsuarioController.cs",
+  "SelectedNode": "\\WebAppCadeteria\\Views\\Usuario\\CrearUsuario.cshtml",
   "PreviewInSolutionExplorer": false
 }

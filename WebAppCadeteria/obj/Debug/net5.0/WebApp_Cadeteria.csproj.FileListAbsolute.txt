@@ -75,3 +75,6 @@ C:\tp032021-PavonEvelin\WebAppCadeteria\obj\Debug\net5.0\WebApp_Cadeteria.genrun
 C:\tp032021-PavonEvelin\WebAppCadeteria\obj\Debug\net5.0\Razor\Views\Administrador\Admin.cshtml.g.cs
 C:\tp032021-PavonEvelin\WebAppCadeteria\obj\Debug\net5.0\Razor\Views\Cadete\MostrarCadeteUsuario.cshtml.g.cs
 C:\tp032021-PavonEvelin\WebAppCadeteria\obj\Debug\net5.0\Razor\Views\Usuario\CrearUsuario.cshtml.g.cs
+C:\tp032021-PavonEvelin\WebAppCadeteria\obj\Debug\net5.0\Razor\Views\Cliente\MostrarClienteUsuario.cshtml.g.cs
+C:\tp032021-PavonEvelin\WebAppCadeteria\obj\Debug\net5.0\Razor\Views\Cliente\Index.cshtml.g.cs
+C:\tp032021-PavonEvelin\WebAppCadeteria\obj\Debug\net5.0\Razor\Views\Cliente\ModificarCliente.cshtml.g.cs

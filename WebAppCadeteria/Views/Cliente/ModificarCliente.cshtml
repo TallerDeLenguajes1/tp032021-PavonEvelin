@@ -4,15 +4,16 @@
 @{
 }
 
-@model WebApp_Cadeteria.Models.ViewModels.CadeteViewModel
+
+@model WebApp_Cadeteria.Models.ViewModels.ClienteViewModel
 
 <div class="text-center">
-    <h2 class="display-4">Actualizacion Cadete</h2>
-    <form asp-action="ModificarCadete2" asp-controller="Cadete" method="post">
+    <h2 class="display-4">Actualizacion Cliente</h2>
+    <form asp-action="ModificarCliente2" asp-controller="Cliente" method="post">
         <input hidden type="text" name="id" value="@Model.Id" id="id" />
         <label>Nombre: <input type="text" name="nombre" value="@Model.Nombre" id="nombre" /></label>
         <label>Direccion: <input type="text" name="direccion" value="@Model.Direccion" id="direccion" /></label>
         <label>Telefono: <input type="text" name="telefono" value="@Model.Telefono" id="telefono" /></label>
-        <input id="Submit" type="submit" value="Cargar"  onclick="return confirm('Desea guardar los cambios?')">/>
+        <input id="Submit" type="submit" value="Cargar" onclick="return confirm('Desea guardar los cambios?')">
     </form>
 </div>

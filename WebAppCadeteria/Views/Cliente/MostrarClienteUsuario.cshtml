@@ -1,0 +1,30 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model WebApp_Cadeteria.Models.ViewModels.ClienteViewModel
+
+<h2 class="display-4">Hola!, @Model.Nombre</h2>
+
+<table class="table table-dark table-striped">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Direccion</th>
+            <th scope="col">Telefono</th>
+            <th scope="col">Actualizar Datos</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">@Model.Id</th>
+            <td>@Model.Nombre</td>
+            <td>@Model.Direccion</td>
+            <td>@Model.Telefono</td>
+            <td><a asp-action="ModificarCliente" asp-controller="Cliente" asp-route-id="@Model.Id">Actualizar Datos</a></td>
+        </tr>
+    </tbody>
+</table>

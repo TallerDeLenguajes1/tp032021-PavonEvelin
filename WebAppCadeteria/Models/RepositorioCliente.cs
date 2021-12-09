@@ -17,28 +17,73 @@ namespace WebApp_Cadeteria.Models
             //conexion = new SQLiteConnection(connectionString);
         }
 
-        
-        public void SaveCliente(Cliente cliente)
+        public List<Cliente> getAll()
         {
-            string SQLQuery = "INSERT INTO clientes(nombre_cliente, direccion_cliente, telefono_cliente " +
-                "VALUES(@nombre_cliente, @direccion_cliente, @telefono_cliente)";
-            using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
+            List<Cliente> ListadoClientes = new List<Cliente>();
+
+            try
             {
-                using (SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion))
+                using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
                 {
-                    //command.Parameters.AddWithValue("@id_cadete", cadete.id);
-                    command.Parameters.AddWithValue("@nombre_cliente", cliente.Nombre);
-                    command.Parameters.AddWithValue("@direccion_cliente", cliente.Direccion);
-                    command.Parameters.AddWithValue("@telefono_cliente", cliente.Telefono);
-                    //command.Parameters.AddWithValue("@id_usuario", id_usuario);
                     conexion.Open();
-                    command.ExecuteNonQuery();
+                    string SQLQuery = "SELECT * FROM clientes WHERE activo_cliente = 1;";
+                    using (SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion))
+                    {
+                        using (SQLiteDataReader DataReader = command.ExecuteReader())
+                        {
+                            while (DataReader.Read())
+                            {
+                                Cliente cliente = new Cliente(Convert.ToInt32(DataReader["id_cliente"]),
+                                                            DataReader["nombre_cliente"].ToString(),
+                                                            DataReader["direccion_cliente"].ToString(),
+                                                            DataReader["telefono_cliente"].ToString());
+                                ListadoClientes.Add(cliente);
+                            }
+                            DataReader.Close();
+                        }
+                    }
+                    conexion.Close();
 
                 }
-                conexion.Close();
+                return ListadoClientes;
             }
+            catch (Exception ex)
+            {
+                var mensaje = "Mensaje de error" + ex.Message;
+                throw;
+            }
+
         }
 
+        public void SaveCliente(Cliente cliente, int id_usuario)
+        { 
+            string SQLQuery = "INSERT INTO clientes(nombre_cliente, direccion_cliente, telefono_cliente, activo_cliente, id_usuario) " +
+                "VALUES(@nombre_cliente, @direccion_cliente, @telefono_cliente,1, @id_usuario)";
+
+            try
+            {
+                using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
+                {
+                    conexion.Open();
+                    using (SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion))
+                    {
+                        command.Parameters.AddWithValue("@nombre_cliente", cliente.Nombre);
+                        command.Parameters.AddWithValue("@direccion_cliente", cliente.Direccion);
+                        command.Parameters.AddWithValue("@telefono_cliente", cliente.Telefono);
+                        command.Parameters.AddWithValue("@id_usuario", id_usuario);
+                        command.ExecuteNonQuery();
+                    }
+                    conexion.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                var mensaje = "Mensaje de error" + ex.Message;
+                throw;
+            }
+            
+        }
+        
         public Cliente GetCliente(string nombre, string direccion)
         {
             Cliente cliente = new Cliente();
@@ -103,6 +148,102 @@ namespace WebApp_Cadeteria.Models
                     conexion.Close();
                 }
                 return idCliente;
+            }
+        }
+
+        public int GetIdClienteByIdUser(int idUsuario)
+        {
+            int idCliente = -1;
+            using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
+            {
+                string SQLQuery = "SELECT * FROM clientes WHERE id_usuario = @idUsuario";
+
+                conexion.Open();
+                using (SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion))
+                {
+                    command.Parameters.AddWithValue("@idUsuario", idUsuario);
+                    using (SQLiteDataReader DataReader = command.ExecuteReader())
+                    {
+                        if (DataReader.Read())
+                        {
+                            idCliente = Convert.ToInt32(DataReader["id_cliente"]);
+                        }
+                        DataReader.Close();
+                    }
+                }
+                conexion.Close();
+            }
+            return idCliente;
+        }
+
+        public Cliente GetClientePorId(int idCliente)
+        {
+            Cliente clienteADevolver = new Cliente();
+            try
+            {
+                using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
+                {
+                    conexion.Open();
+                    string SQLQuery = "SELECT * FROM clientes WHERE id_cliente = @idCliente";
+                    using (SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion))
+                    {
+                        command.Parameters.AddWithValue("@idCliente", idCliente);
+                        using (SQLiteDataReader DataReader = command.ExecuteReader())
+                        {
+                            if (DataReader.Read())
+                            {
+
+                                clienteADevolver = new Cliente(Convert.ToInt32(DataReader["id_cliente"]),
+                                                            DataReader["nombre_cliente"].ToString(),
+                                                            DataReader["direccion_cliente"].ToString(),
+                                                            DataReader["telefono_cliente"].ToString());
+                            }
+                            DataReader.Close();
+                        }
+                    }
+                    conexion.Close();
+                }
+                return clienteADevolver;
+            }
+            catch (Exception ex)
+            {
+                var mensaje = "Mensaje de error" + ex.Message;
+                throw;
+            }
+
+        }
+
+        public void UpdateCliente(Cliente cliente)
+        {
+            string SQLQuery = "UPDATE clientes SET nombre_cliente = @nombre_cliente, direccion_cliente = @direccion_cliente, " +
+                "telefono_cliente = @telefono_cliente WHERE id_cliente = @id_cliente";
+            using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
+            {
+                using (SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion))
+                {
+                    command.Parameters.AddWithValue("@nombre_cliente", cliente.Nombre);
+                    command.Parameters.AddWithValue("@direccion_cliente", cliente.Direccion);
+                    command.Parameters.AddWithValue("@telefono_cliente", cliente.Telefono);
+                    command.Parameters.AddWithValue("@id_cliente", cliente.Id);
+                    conexion.Open();
+                    command.ExecuteNonQuery();
+                    conexion.Close();
+                }
+            }
+        }
+
+        public void DeleteCliente(int id_cliente)
+        {
+            string SQLQuery = "UPDATE clientes SET activo_cliente = 0 WHERE id_cliente = @id_cliente";
+            using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
+            {
+                using (SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion))
+                {
+                    command.Parameters.AddWithValue("@id_cliente", id_cliente);
+                    conexion.Open();
+                    command.ExecuteNonQuery();
+                    conexion.Close();
+                }
             }
         }
     }

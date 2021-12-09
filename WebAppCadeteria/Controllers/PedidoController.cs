@@ -71,7 +71,7 @@ namespace WebApp_Cadeteria.Controllers
                         newPedido.Cliente.Nombre = nombreCliente;
                         newPedido.Cliente.Telefono = telefono;
                         newPedido.Cliente.Direccion = direccion;
-                        repoCliente.SaveCliente(newPedido.Cliente);
+                        repoCliente.SaveCliente(newPedido.Cliente, -1);
                         newPedido.Cliente = repoCliente.GetCliente(nombreCliente, direccion);
                     }
                     repoPedidos.SavePedido(newPedido);
