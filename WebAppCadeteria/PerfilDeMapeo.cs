@@ -17,6 +17,9 @@ namespace WebApp_Cadeteria
             CreateMap<Usuario, UsuarioViewModel>().ReverseMap();
             CreateMap<Cadete, Usuario>().ReverseMap();
 
+            CreateMap<Pedidos, PedidoViewModel>().ReverseMap();
+
+            CreateMap<Cliente, ClienteViewModel>().ReverseMap();
         }
     }
 }

@@ -5,19 +5,20 @@ using System.Threading.Tasks;
 
 namespace WebApp_Cadeteria.Models.ViewModels
 {
-    public class PedidosViewModel
+    public class PedidoViewModel
     {
         private int numero;
         private string observacion;
         private string estado;
-        private Cliente cliente;
+        private ClienteViewModel cliente;
+        public int idCadete { get; set; }
 
         public int Numero { get => numero; set => numero = value; }
         public string Observacion { get => observacion; set => observacion = value; }
         public string Estado { get => estado; set => estado = value; }
-        public Cliente Cliente { get => cliente; set => cliente = value; }
+        public ClienteViewModel Cliente { get => cliente; set => cliente = value; }
        
-        public int idCadete {get; set;}
+
 
     }
 }

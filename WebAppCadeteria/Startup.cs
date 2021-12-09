@@ -33,9 +33,11 @@ namespace WebApp_Cadeteria
             IRepositorioCadete repoCadetes = new RepositorioCadete(ConnectionStrings);
             IRepositorioPedido repoPedidos = new RepositorioPedido(ConnectionStrings);
             RepositorioUsuario repoUsuarios = new RepositorioUsuario(ConnectionStrings);
+            RepositorioCliente repoClientes= new RepositorioCliente(ConnectionStrings);
             services.AddSingleton(repoCadetes);
             services.AddSingleton(repoPedidos);
             services.AddSingleton(repoUsuarios);
+            services.AddSingleton(repoClientes);
 
             //Configuration.GetConnectionString("Default");
             services.AddControllersWithViews();

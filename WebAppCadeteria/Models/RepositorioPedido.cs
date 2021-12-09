@@ -99,27 +99,39 @@ namespace WebApp_Cadeteria.Models
         
         public int TieneElPedidoUnCadete( int idPedido)
         {
-            int idCadete = -1; 
-            using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
+            int idCadete = -1;
+            try
             {
-                conexion.Open();
-                string SQLQuery = "SELECT id_cadete FROM pedidos WHERE id_pedido = @idPedido";
-                SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion);
-                using (SQLiteDataReader DataReader = command.ExecuteReader())
+                using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
                 {
-                    command.Parameters.AddWithValue("@idPedido", idPedido);
-                    if (DataReader.Read())
+                    conexion.Open();
+                    string SQLQuery = "SELECT id_cadete FROM pedidos WHERE id_pedido = @idPedido";
+                    using (SQLiteCommand command = new SQLiteCommand(SQLQuery, conexion))
                     {
-                        var idCadeteObject = DataReader["id_cadete"];
-                        if (idCadeteObject!=null)
+                        command.Parameters.AddWithValue("@idPedido", idPedido);
+                        command.ExecuteNonQuery();
+                        using (SQLiteDataReader DataReader = command.ExecuteReader())
                         {
-                            idCadete = Convert.ToInt32(idCadeteObject);
+                            if (DataReader.Read())
+                            {
+                                var idCadeteObject = DataReader["id_cadete"];
+                                if (idCadeteObject != null)
+                                {
+                                    idCadete = Convert.ToInt32(idCadeteObject);
+                                }
+                            }
+                            DataReader.Close();
                         }
                     }
-                    DataReader.Close();
                     conexion.Close();
                 }
             }
+            catch (Exception ex)
+            {
+                var mensaje = "Mensaje de error" + ex.Message;
+                //throw;
+            }
+            
             return idCadete;
         }
 
@@ -202,6 +214,5 @@ namespace WebApp_Cadeteria.Models
                 }
             }
         }
-
     }
 }
