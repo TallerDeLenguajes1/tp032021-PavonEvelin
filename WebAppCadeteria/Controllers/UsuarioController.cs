@@ -96,7 +96,7 @@ namespace WebApp_Cadeteria.Controllers
 
         [HttpPost]
         public IActionResult AltaUsuario(UsuarioViewModel usuario)
-        {
+        { 
             try
             {
                 if (ModelState.IsValid)
@@ -105,16 +105,23 @@ namespace WebApp_Cadeteria.Controllers
                     {
                         Usuario nuevoUser = mapper.Map<Usuario>(usuario);
                         repoUsuarios.SaveUser(nuevoUser);
+                        int idUser = nuevoUser.Id;//para probar
+
                         switch (nuevoUser.Rol)
                         {
                             case "Cadete":
-                                repoCadetes.SaveCadete(mapper.Map<Cadete>(nuevoUser), nuevoUser.Id); //duda
+                                Cadete newCadete = new Cadete();
+                                newCadete.Nombre = nuevoUser.Nombre;
+                                newCadete.Direccion = nuevoUser.Direccion;
+                                newCadete.Telefono = nuevoUser.Telefono;
+                                repoCadetes.SaveCadete(newCadete, nuevoUser.Id);
+                                //repoCadetes.SaveCadete(mapper.Map<Cadete>(nuevoUser), nuevoUser.Id); //duda
                                 break;
-                            //case Roles.Cliente:
+                            //case "Cliente":
                             default:
                                 break;
                         }
-                        return RedirectToAction("Index", "Cadete");
+                        return View("Index");
                     }
                     else
                     {
