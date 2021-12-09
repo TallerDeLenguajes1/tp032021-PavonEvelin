@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using WebApp_Cadeteria.Models.Entities;
 
-namespace WebApp_Cadeteria.Models
+namespace WebApp_Cadeteria.Models.Repositories
 {
     public interface IRepositorioPedido
     {

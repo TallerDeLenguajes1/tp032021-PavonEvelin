@@ -11,11 +11,9 @@ namespace WebApp_Cadeteria.Controllers
     public class CadeteriaController : Controller
     {
         private readonly ILogger<CadeteriaController> _logger;
-        private readonly DBTemporal dB;
-        public CadeteriaController(ILogger<CadeteriaController> logger, DBTemporal DB)
+        public CadeteriaController(ILogger<CadeteriaController> logger)
         {
             _logger = logger;
-            dB = DB;
         }
         /*
         public IActionResult Index()

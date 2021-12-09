@@ -6,30 +6,28 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebApp_Cadeteria.Models;
+using WebApp_Cadeteria.Models.Entities;
+using WebApp_Cadeteria.Models.Repositories;
 using WebApp_Cadeteria.Models.ViewModels;
+using WebApp_Cadeteria.Models.ViewModels.ClienteViewModels;
 
 namespace WebApp_Cadeteria.Controllers
 {
     public class ClienteController : Controller
     {
         private readonly ILogger<UsuarioController> logger;
-        private readonly RepositorioUsuario repoUsuarios;
-        private readonly IRepositorioCadete repoCadetes;
-        private readonly RepositorioCliente repoClientes;
+        private readonly DataContext dataContext;
         private readonly IMapper mapper;
 
-        public ClienteController(ILogger<UsuarioController> logger, RepositorioUsuario RepoUsuarios, IRepositorioCadete RepoCadetes, RepositorioCliente RepoClientes, IMapper mapper)
+        public ClienteController(ILogger<UsuarioController> logger, DataContext DataContext, IMapper mapper)
         {
             this.logger = logger;
-            repoUsuarios = RepoUsuarios;
-            repoCadetes = RepoCadetes;
-            repoClientes = RepoClientes;
+            dataContext = DataContext;
             this.mapper = mapper;
         }
         public IActionResult Index()
         {
-            List<Cliente> listadoClientes = repoClientes.getAll();
+            List<Cliente> listadoClientes = dataContext.Clientes.getAll();
             var listaClientesViewModel = mapper.Map<List<ClienteViewModel>>(listadoClientes);
             return View(listaClientesViewModel);
         }
@@ -54,7 +52,7 @@ namespace WebApp_Cadeteria.Controllers
             string rol = HttpContext.Session.GetString("Rol");
             if (rol == "Admin" || rol == "Cliente")
             {
-                ClienteViewModel clienteAModificar = mapper.Map<ClienteViewModel>(repoClientes.GetClientePorId(id));
+                ClienteViewModel clienteAModificar = mapper.Map<ClienteViewModel>(dataContext.Clientes.GetClientePorId(id));
                 if (clienteAModificar != null)
                 {
                     return View(clienteAModificar);
@@ -77,7 +75,7 @@ namespace WebApp_Cadeteria.Controllers
 
             if (clienteAModificar != null)
             {
-                repoClientes.UpdateCliente(clienteAModificar);
+                dataContext.Clientes.UpdateCliente(clienteAModificar);
             }
             return Redirect("Index");
         }
@@ -87,7 +85,7 @@ namespace WebApp_Cadeteria.Controllers
             string rol = HttpContext.Session.GetString("Rol");
             if (rol == "Admin")
             {
-                repoClientes.DeleteCliente(id);
+                dataContext.Clientes.DeleteCliente(id);
                 return Redirect("Index");
             }
             else

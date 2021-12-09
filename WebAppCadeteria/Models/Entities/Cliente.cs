@@ -1,32 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebApp_Cadeteria.Models.ViewModels
+namespace WebApp_Cadeteria.Models.Entities
 {
-    public class CadeteViewModel
+    public class Cliente
     {
         private int id;
-
-        [Required(ErrorMessage = "El campo Nombre es requerido")]
-        [Display(Name = "Nombre")]
-        [StringLength(100)]
         private string nombre;
-        
-        [StringLength(80)]
         private string direccion;
-        
-        [StringLength(15)]
         private string telefono;
-
-        private List<PedidoViewModel> listaDePedidos;
 
         public int Id { get => id; set => id = value; }
         public string Nombre { get => nombre; set => nombre = value; }
         public string Direccion { get => direccion; set => direccion = value; }
         public string Telefono { get => telefono; set => telefono = value; }
-        public List<PedidoViewModel> ListaDePedidos { get => listaDePedidos; set => listaDePedidos = value; }
+
+        public Cliente()
+        {
+
+        }
+
+        public Cliente(int id, string nombre, string direccion, string telefono)
+        {
+            this.id = id;
+            this.nombre = nombre;
+            this.direccion = direccion;
+            this.telefono = telefono;
+        }
     }
 }

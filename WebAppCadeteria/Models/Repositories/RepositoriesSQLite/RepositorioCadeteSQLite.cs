@@ -3,17 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Data.SQLite;
+using WebApp_Cadeteria.Models.Entities;
+using Microsoft.Extensions.Logging;
+using NLog;
 
-namespace WebApp_Cadeteria.Models
+namespace WebApp_Cadeteria.Models.Repositories.RepositoriesSQLite
 {
-    public class RepositorioCadete : IRepositorioCadete
+    public class RepositorioCadeteSQLite : IRepositorioCadete
     {
         private readonly string connectionString;
+        private readonly Logger log;
+
         //private readonly SQLiteConnection conexion;
 
-        public RepositorioCadete(string connectionString)
+        public RepositorioCadeteSQLite(string connectionString, Logger log)
         {
             this.connectionString = connectionString;
+            this.log = log;
             //conexion = new SQLiteConnection(connectionString);
         }
 

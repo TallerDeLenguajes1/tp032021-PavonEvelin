@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebApp_Cadeteria.Models
+namespace WebApp_Cadeteria.Models.Entities
 {
     public class Cadeteria
     {

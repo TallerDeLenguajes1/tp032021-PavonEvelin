@@ -1,19 +1,24 @@
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApp_Cadeteria.Models.Entities;
 
-namespace WebApp_Cadeteria.Models
+namespace WebApp_Cadeteria.Models.Repositories.RepositoriesSQLite
 {
-    public class RepositorioPedido : IRepositorioPedido
+    public class RepositorioPedidoSQLite : IRepositorioPedido
     {
         private readonly string connectionString;
+        private readonly Logger log;
+
         //private readonly SQLiteConnection conexion;
 
-        public RepositorioPedido(string connectionString)
+        public RepositorioPedidoSQLite(string connectionString, Logger log)
         {
             this.connectionString = connectionString;
+            this.log = log;
             //conexion = new SQLiteConnection(connectionString);
         }
 

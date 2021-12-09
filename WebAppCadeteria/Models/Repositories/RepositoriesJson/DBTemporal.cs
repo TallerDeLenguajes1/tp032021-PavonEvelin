@@ -5,8 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using WebApp_Cadeteria.Models.Entities;
 
-namespace WebApp_Cadeteria.Models
+namespace WebApp_Cadeteria.Models.Repositories.RepositoriesJson
 {
     public class DBTemporal
     {

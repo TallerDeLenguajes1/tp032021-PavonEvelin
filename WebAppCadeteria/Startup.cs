@@ -4,21 +4,19 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NLog.Web;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApp_Cadeteria.Models;
+using WebApp_Cadeteria.Models.Repositories;
+using WebApp_Cadeteria.Models.Repositories.RepositoriesSQLite;
 
 namespace WebApp_Cadeteria
 {
     public class Startup
     {
-        //static DBTemporal DB = new DBTemporal();
-        //static IRepositorioCadete repoCadete = new RepositorioCadete(ConnectionString);
-        //static IRepositorioPedido repoPedido = new RepositorioPedido("Data Source=C:\\Users\\eveli\\Downloads\\Cadeteria.db;Cache=Shared");
-        //static RepositorioUsuario repoUsuario = new RepositorioUsuario("Data Source=C:\\Users\\eveli\\Downloads\\Cadeteria.db;Cache=Shared");
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -30,14 +28,41 @@ namespace WebApp_Cadeteria
         public void ConfigureServices(IServiceCollection services)
         {
             var ConnectionStrings = Configuration.GetConnectionString("Default");
-            IRepositorioCadete repoCadetes = new RepositorioCadete(ConnectionStrings);
-            IRepositorioPedido repoPedidos = new RepositorioPedido(ConnectionStrings);
-            RepositorioUsuario repoUsuarios = new RepositorioUsuario(ConnectionStrings);
-            RepositorioCliente repoClientes= new RepositorioCliente(ConnectionStrings);
+
+            // CREACIÓN E INYECCIÓN DE BASE DE DATOS
+            RepositorioCadeteSQLite repoCadetes =
+                    new RepositorioCadeteSQLite(
+                        Configuration.GetConnectionString("SqliteConection"),
+                        NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger());
+
+            RepositorioPedidoSQLite repoPedidos =
+                    new RepositorioPedidoSQLite(
+                        Configuration.GetConnectionString("SqliteConection"),
+                        NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger());
+
+            RepositorioUsuarioSQLite repoUsuarios =
+                    new RepositorioUsuarioSQLite(
+                        Configuration.GetConnectionString("SqliteConection"),
+                        NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger());
+
+            RepositorioClienteSQLite repoClientes =
+                    new RepositorioClienteSQLite(
+                        Configuration.GetConnectionString("SqliteConection"),
+                        NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger());
+
+            DataContext data = new DataContext(repoCadetes, repoPedidos, repoUsuarios, repoClientes);
+            services.AddSingleton(data);
+            // CREACIÓN E INYECCIÓN DE BASE DE DATOS
+
+            /*
+            IRepositorioCadete repoCadetes = new RepositorioCadeteSQLite(ConnectionStrings);
+            IRepositorioPedido repoPedidos = new RepositorioPedidoSQLite(ConnectionStrings);
+            RepositorioUsuarioSQLite repoUsuarios = new RepositorioUsuarioSQLite(ConnectionStrings);
+            RepositorioClienteSQLite repoClientes= new RepositorioClienteSQLite(ConnectionStrings);
             services.AddSingleton(repoCadetes);
             services.AddSingleton(repoPedidos);
             services.AddSingleton(repoUsuarios);
-            services.AddSingleton(repoClientes);
+            services.AddSingleton(repoClientes);*/
 
             //Configuration.GetConnectionString("Default");
             services.AddControllersWithViews();

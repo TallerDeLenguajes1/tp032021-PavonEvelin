@@ -1,19 +1,24 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApp_Cadeteria.Models.Entities;
 
-namespace WebApp_Cadeteria.Models
+namespace WebApp_Cadeteria.Models.Repositories.RepositoriesSQLite
 {
-    public class RepositorioCliente
+    public class RepositorioClienteSQLite : IRepositorioCliente
     {
         private readonly string connectionString;
+        private readonly Logger log;
+
         //private readonly SQLiteConnection conexion;
 
-        public RepositorioCliente(string connectionString)
+        public RepositorioClienteSQLite(string connectionString, Logger log)
         {
             this.connectionString = connectionString;
+            this.log = log;
             //conexion = new SQLiteConnection(connectionString);
         }
 
@@ -56,7 +61,7 @@ namespace WebApp_Cadeteria.Models
         }
 
         public void SaveCliente(Cliente cliente, int id_usuario)
-        { 
+        {
             string SQLQuery = "INSERT INTO clientes(nombre_cliente, direccion_cliente, telefono_cliente, activo_cliente, id_usuario) " +
                 "VALUES(@nombre_cliente, @direccion_cliente, @telefono_cliente,1, @id_usuario)";
 
@@ -81,9 +86,9 @@ namespace WebApp_Cadeteria.Models
                 var mensaje = "Mensaje de error" + ex.Message;
                 throw;
             }
-            
+
         }
-        
+
         public Cliente GetCliente(string nombre, string direccion)
         {
             Cliente cliente = new Cliente();

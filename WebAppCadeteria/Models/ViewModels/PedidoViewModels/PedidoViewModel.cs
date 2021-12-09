@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApp_Cadeteria.Models.ViewModels.ClienteViewModels;
 
-namespace WebApp_Cadeteria.Models.ViewModels
+namespace WebApp_Cadeteria.Models.ViewModels.PedidoViewModels
 {
     public class PedidoViewModel
     {

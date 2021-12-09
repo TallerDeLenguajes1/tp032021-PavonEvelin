@@ -5,31 +5,30 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebApp_Cadeteria.Models;
+using WebApp_Cadeteria.Models.Entities;
 using WebApp_Cadeteria.Models.ViewModels;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
+using WebApp_Cadeteria.Models.Repositories;
+using WebApp_Cadeteria.Models.ViewModels.CadeteViewModels;
 
 namespace WebApp_Cadeteria.Controllers
 {
     public class CadeteController : Controller
     {
-        //static int id;
         private readonly ILogger<CadeteController> _logger;
-        //private readonly DBTemporal _DB;
-        private readonly IRepositorioCadete repoCadetes;
+        private readonly DataContext dataContext;
         private readonly IMapper mapper;
 
-        public CadeteController(ILogger<CadeteController> logger, IRepositorioCadete RepoCadetes, IMapper mapper)
+        public CadeteController(ILogger<CadeteController> logger, DataContext DataContext, IMapper mapper)
         {
             _logger = logger;
-            //_DB = DB;
-            repoCadetes = RepoCadetes;
+            dataContext = DataContext;
             this.mapper = mapper;
         }
         public IActionResult Index()
         {
-            List<Cadete> listadoCadetes = repoCadetes.getAll();
+            List<Cadete> listadoCadetes = dataContext.Cadetes.getAll();
             var listaCadetesViewModel = mapper.Map<List<CadeteViewModel>>(listadoCadetes);
             return View(listaCadetesViewModel);
         }
@@ -83,7 +82,7 @@ namespace WebApp_Cadeteria.Controllers
             string rol = HttpContext.Session.GetString("Rol");
             if (rol == "Admin")
             {
-                repoCadetes.DeleteCadete(id);
+                dataContext.Cadetes.DeleteCadete(id);
                 return Redirect("Index");
             }
             else
@@ -98,7 +97,7 @@ namespace WebApp_Cadeteria.Controllers
             string rol = HttpContext.Session.GetString("Rol");
             if (rol == "Admin" || rol == "Cadete")
             {
-                CadeteViewModel cadeteAModificar = mapper.Map<CadeteViewModel>(repoCadetes.GetCadetePorId(id));
+                CadeteViewModel cadeteAModificar = mapper.Map<CadeteViewModel>(dataContext.Cadetes.GetCadetePorId(id));
                 if (cadeteAModificar != null)
                 {
                     return View(cadeteAModificar);
@@ -121,7 +120,7 @@ namespace WebApp_Cadeteria.Controllers
 
             if (cadeteAModificar != null)
             {
-                repoCadetes.UpdateCadete(cadeteAModificar);
+                dataContext.Cadetes.UpdateCadete(cadeteAModificar);
             }
             return Redirect("Index");
         }

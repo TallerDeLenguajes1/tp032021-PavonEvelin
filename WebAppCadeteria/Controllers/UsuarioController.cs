@@ -8,7 +8,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WebApp_Cadeteria.Models;
-using WebApp_Cadeteria.Models.ViewModels;
+using WebApp_Cadeteria.Models.Entities;
+using WebApp_Cadeteria.Models.Repositories;
+using WebApp_Cadeteria.Models.ViewModels.UsuarioViewModels;
+using WebApp_Cadeteria.Models.ViewModels.CadeteViewModels;
+using WebApp_Cadeteria.Models.ViewModels.ClienteViewModels;
 
 namespace WebApp_Cadeteria.Controllers
 {
@@ -16,17 +20,13 @@ namespace WebApp_Cadeteria.Controllers
     public class UsuarioController : Controller
     {
         private readonly ILogger<UsuarioController> _logger;
-        private readonly RepositorioUsuario repoUsuarios;
-        private readonly IRepositorioCadete repoCadetes;
-        private readonly RepositorioCliente repoClientes;
+        private readonly DataContext dataContext;
         private readonly IMapper mapper;
 
-        public UsuarioController(ILogger<UsuarioController> logger, RepositorioUsuario RepoUsuarios, IRepositorioCadete RepoCadetes, RepositorioCliente RepoClientes, IMapper mapper)
+        public UsuarioController(ILogger<UsuarioController> logger, DataContext DataContext, IMapper mapper)
         {
             _logger = logger;
-            repoUsuarios = RepoUsuarios;
-            repoCadetes = RepoCadetes;
-            repoClientes = RepoClientes;
+            dataContext = DataContext;
             this.mapper = mapper;
         }
 
@@ -47,9 +47,9 @@ namespace WebApp_Cadeteria.Controllers
             try
             {
 
-                if (repoUsuarios.ValidateUser(mapper.Map<Usuario>(usuario)))
+                if (dataContext.Usuarios.ValidateUser(mapper.Map<Usuario>(usuario)))
                 {
-                    Usuario user = repoUsuarios.GetUser(usuario.UserName, usuario.Password);
+                    Usuario user = dataContext.Usuarios.GetUser(usuario.UserName, usuario.Password);
                     //HttpContext.Session.SetString("UserName", usuario.UserName);
                     HttpContext.Session.SetString("Rol", user.Rol);
                     /*
@@ -68,12 +68,12 @@ namespace WebApp_Cadeteria.Controllers
                         case "Admin":
                             return View("../Administrador/Admin");
                         case "Cadete":
-                            int id_cadete = repoCadetes.GetIdCadeteByIdUser(user.Id);
-                            var cadeteVM = mapper.Map<CadeteViewModel>(repoCadetes.GetCadetePorId(id_cadete));
+                            int id_cadete = dataContext.Cadetes.GetIdCadeteByIdUser(user.Id);
+                            var cadeteVM = mapper.Map<CadeteViewModel>(dataContext.Cadetes.GetCadetePorId(id_cadete));
                             return View("../Cadete/MostrarCadeteUsuario", cadeteVM);
                         case "Cliente":
-                            int id_cliente = repoClientes.GetIdClienteByIdUser(user.Id);
-                            var clienteVM = mapper.Map<ClienteViewModel>(repoClientes.GetClientePorId(id_cliente));
+                            int id_cliente = dataContext.Clientes.GetIdClienteByIdUser(user.Id);
+                            var clienteVM = mapper.Map<ClienteViewModel>(dataContext.Clientes.GetClientePorId(id_cliente));
                             return View("../Cliente/MostrarClienteUsuario", clienteVM);
                             break;
                         default:
@@ -108,8 +108,8 @@ namespace WebApp_Cadeteria.Controllers
                     if (usuario.Rol == "Cadete" || usuario.Rol == "Cliente")
                     {
                         Usuario nuevoUser = mapper.Map<Usuario>(usuario);
-                        repoUsuarios.SaveUser(nuevoUser);
-                        int idUser = repoUsuarios.GetUserID(nuevoUser);
+                        dataContext.Usuarios.SaveUser(nuevoUser);
+                        int idUser = dataContext.Usuarios.GetUserID(nuevoUser);
 
                         switch (nuevoUser.Rol)
                         {
@@ -118,7 +118,7 @@ namespace WebApp_Cadeteria.Controllers
                                 newCadete.Nombre = nuevoUser.Nombre;
                                 newCadete.Direccion = nuevoUser.Direccion;
                                 newCadete.Telefono = nuevoUser.Telefono;
-                                repoCadetes.SaveCadete(newCadete, idUser);
+                                dataContext.Cadetes.SaveCadete(newCadete, idUser);
                                 //repoCadetes.SaveCadete(mapper.Map<Cadete>(nuevoUser), nuevoUser.Id); //duda
                                 break;
                             case "Cliente":
@@ -126,7 +126,7 @@ namespace WebApp_Cadeteria.Controllers
                                 newCliente.Nombre = nuevoUser.Nombre;
                                 newCliente.Direccion = nuevoUser.Direccion;
                                 newCliente.Telefono = nuevoUser.Telefono;
-                                repoClientes.SaveCliente(newCliente, idUser);
+                                dataContext.Clientes.SaveCliente(newCliente, idUser);
                                 break;
                             default:
                                 break;
