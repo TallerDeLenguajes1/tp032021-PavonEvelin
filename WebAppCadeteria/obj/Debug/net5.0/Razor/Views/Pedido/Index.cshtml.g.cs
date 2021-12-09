@@ -28,7 +28,7 @@ using WebApp_Cadeteria.Models;
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"94704c2a5d753673c95ca09ec4898486078bd732", @"/Views/Pedido/Index.cshtml")]
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"a92313560c3cfb6f246bd708f76a493a657cc982", @"/Views/_ViewImports.cshtml")]
-    public class Views_Pedido_Index : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<WebApp_Cadeteria.Models.ViewModels.ListarPedidosViewModel>
+    public class Views_Pedido_Index : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<WebApp_Cadeteria.Models.ViewModels.PedidoViewModels.ListarPedidosViewModel>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("class", new global::Microsoft.AspNetCore.Html.HtmlString("btn-info btn-success btn-lg"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_1 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-action", "CrearPedido", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -343,7 +343,7 @@ WriteAttributeValue("", 1110, item.Numero, 1110, 12, false);
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
         public global::Microsoft.AspNetCore.Mvc.Rendering.IJsonHelper Json { get; private set; }
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
-        public global::Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper<WebApp_Cadeteria.Models.ViewModels.ListarPedidosViewModel> Html { get; private set; }
+        public global::Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper<WebApp_Cadeteria.Models.ViewModels.PedidoViewModels.ListarPedidosViewModel> Html { get; private set; }
     }
 }
 #pragma warning restore 1591

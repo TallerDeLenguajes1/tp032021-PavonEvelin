@@ -28,7 +28,7 @@ using WebApp_Cadeteria.Models;
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"e42fa9ec189d58ef72909122efc6e590542102d9", @"/Views/Cadete/MostrarCadeteUsuario.cshtml")]
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"a92313560c3cfb6f246bd708f76a493a657cc982", @"/Views/_ViewImports.cshtml")]
-    public class Views_Cadete_MostrarCadeteUsuario : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<WebApp_Cadeteria.Models.ViewModels.CadeteViewModel>
+    public class Views_Cadete_MostrarCadeteUsuario : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<WebApp_Cadeteria.Models.ViewModels.CadeteViewModels>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-action", "ModificarCadete", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_1 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-route-id", "Model.Id", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -145,7 +145,7 @@ using WebApp_Cadeteria.Models;
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
         public global::Microsoft.AspNetCore.Mvc.Rendering.IJsonHelper Json { get; private set; }
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
-        public global::Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper<WebApp_Cadeteria.Models.ViewModels.CadeteViewModel> Html { get; private set; }
+        public global::Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper<WebApp_Cadeteria.Models.ViewModels.CadeteViewModels> Html { get; private set; }
     }
 }
 #pragma warning restore 1591
